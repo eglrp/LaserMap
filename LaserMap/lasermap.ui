@@ -14,17 +14,14 @@
    <string>LaserMap</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="PointGL" name="openGLplot">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>20</x>
       <y>0</y>
-      <width>75</width>
-      <height>23</height>
+      <width>300</width>
+      <height>200</height>
      </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
     </property>
    </widget>
   </widget>
@@ -74,6 +71,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>PointGL</class>
+   <extends>QOpenGLWidget</extends>
+   <header>pointgl.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="lasermap.qrc"/>
  </resources>

@@ -17,10 +17,10 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
+#include "pointgl.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -31,7 +31,7 @@ public:
     QAction *actionClose;
     QAction *actionExit;
     QWidget *centralWidget;
-    QPushButton *pushButton;
+    PointGL *openGLplot;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -50,9 +50,9 @@ public:
         actionExit->setObjectName(QStringLiteral("actionExit"));
         centralWidget = new QWidget(LaserMapClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(0, 0, 75, 23));
+        openGLplot = new PointGL(centralWidget);
+        openGLplot->setObjectName(QStringLiteral("openGLplot"));
+        openGLplot->setGeometry(QRect(20, 0, 300, 200));
         LaserMapClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LaserMapClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -84,7 +84,6 @@ public:
         actionOpen->setText(QApplication::translate("LaserMapClass", "Open", 0));
         actionClose->setText(QApplication::translate("LaserMapClass", "Close", 0));
         actionExit->setText(QApplication::translate("LaserMapClass", "Exit", 0));
-        pushButton->setText(QApplication::translate("LaserMapClass", "PushButton", 0));
         menuFile->setTitle(QApplication::translate("LaserMapClass", "File", 0));
     } // retranslateUi
 

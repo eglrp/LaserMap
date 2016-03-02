@@ -50,6 +50,15 @@
     <ClCompile Include="GeneratedFiles\qrc_lasermap.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="PointGL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_PointGL.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_PointGL.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="lasermap.h">
@@ -60,6 +69,9 @@
     </CustomBuild>
     <CustomBuild Include="lasermap.qrc">
       <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PointGL.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include <QtWidgets/qopenglwidget.h>
 #include <QtOpenGL>
 #include <qopenglcontext.h>
+#include <gl\GLU.h>
 
 
 class PointGL : public QOpenGLWidget, protected QOpenGLFunctions
@@ -20,8 +21,7 @@ protected:
 	virtual void resizeGL(int w, int h);
 
 private:
-	float spin;
-
+	void drawCube(void);
 };
 
 

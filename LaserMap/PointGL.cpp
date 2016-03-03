@@ -45,6 +45,7 @@ void PointGL::resizeGL(int w, int h)
 	glOrtho(-10.0, 10.0, -10.0, 10.0, -5.0, 5.0); //define el espacio que se puede visualizar enfrente de la camara
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glRotatef(30.0, 1.0, 1.0, 1.0);
 }
 
 

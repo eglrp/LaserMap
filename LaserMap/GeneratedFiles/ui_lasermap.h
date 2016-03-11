@@ -20,7 +20,7 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
-#include "pointgl.h"
+#include "OpenGLplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -31,7 +31,7 @@ public:
     QAction *actionClose;
     QAction *actionExit;
     QWidget *centralWidget;
-    PointGL *openGLplot;
+    OpenGLplot *openGLplot;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -41,7 +41,7 @@ public:
     {
         if (LaserMapClass->objectName().isEmpty())
             LaserMapClass->setObjectName(QStringLiteral("LaserMapClass"));
-        LaserMapClass->resize(600, 400);
+        LaserMapClass->resize(522, 396);
         actionOpen = new QAction(LaserMapClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionClose = new QAction(LaserMapClass);
@@ -50,13 +50,13 @@ public:
         actionExit->setObjectName(QStringLiteral("actionExit"));
         centralWidget = new QWidget(LaserMapClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        openGLplot = new PointGL(centralWidget);
+        openGLplot = new OpenGLplot(centralWidget);
         openGLplot->setObjectName(QStringLiteral("openGLplot"));
-        openGLplot->setGeometry(QRect(20, 0, 300, 200));
+        openGLplot->setGeometry(QRect(110, 70, 300, 200));
         LaserMapClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LaserMapClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 21));
+        menuBar->setGeometry(QRect(0, 0, 522, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         LaserMapClass->setMenuBar(menuBar);

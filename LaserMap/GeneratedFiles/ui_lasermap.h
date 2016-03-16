@@ -52,7 +52,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         openGLplot = new OpenGLplot(centralWidget);
         openGLplot->setObjectName(QStringLiteral("openGLplot"));
-        openGLplot->setGeometry(QRect(110, 70, 300, 200));
+        openGLplot->setGeometry(QRect(0, -1, 521, 341));
         LaserMapClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LaserMapClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));

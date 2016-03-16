@@ -27,9 +27,6 @@ void LaserMap::openFile()
 // 		liblas::ReaderFactory f;
 // 		liblas::Reader reader = f.CreateWithStream(ifs);
 // 	
-		//http://www.liblas.org/tutorial/cpp.html#applying-filters-to-a-reader-to-extract-specified-classes
-// 	http://www.liblas.org/doxygen/classliblas_1_1Point.html#details
-
 	
 		emit fileSelected(filename);
 	}

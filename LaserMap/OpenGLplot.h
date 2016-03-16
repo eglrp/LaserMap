@@ -28,9 +28,10 @@ public slots:
 	void paintFileLAS(QString filename);
 
 private:
-	void openLASfile();
-	float gl_width =1000000.0, gl_height = 1000000.0, gl_close = 1.0, gl_far = 4.0;
-
+	GLdouble xMin = 1.0, xMax = 1.0, yMin = 1.0, yMax = 1.0, gl_close = 1.0, gl_far = 1.0;
+	QList<liblas::Point> pointList;
+	//liblas::Header header;
+	void openLASfile(QString filename);
 };
 
 

@@ -41,7 +41,7 @@ public:
     {
         if (LaserMapClass->objectName().isEmpty())
             LaserMapClass->setObjectName(QStringLiteral("LaserMapClass"));
-        LaserMapClass->resize(522, 396);
+        LaserMapClass->resize(503, 555);
         actionOpen = new QAction(LaserMapClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionClose = new QAction(LaserMapClass);
@@ -52,11 +52,18 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         openGLplot = new OpenGLplot(centralWidget);
         openGLplot->setObjectName(QStringLiteral("openGLplot"));
-        openGLplot->setGeometry(QRect(0, -1, 521, 341));
+        openGLplot->setGeometry(QRect(0, -1, 500, 500));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(openGLplot->sizePolicy().hasHeightForWidth());
+        openGLplot->setSizePolicy(sizePolicy);
+        openGLplot->setMinimumSize(QSize(500, 500));
+        openGLplot->setMaximumSize(QSize(500, 500));
         LaserMapClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LaserMapClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 522, 21));
+        menuBar->setGeometry(QRect(0, 0, 503, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         LaserMapClass->setMenuBar(menuBar);

@@ -30,11 +30,15 @@ void OpenGLplot::resizeGL(int w, int h)
 // 
 // 	dx *= (float)w / (float)h;
 // 	dy *= (float)h / (float)w;
-	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	//glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-((xMax + xMin) *50), (xMax + xMin)*50 , -((yMax + yMin)*50 ), (yMax + yMin)*50 , 1.0, 3.0); //zMax - zMin + 3.0
+	glOrtho(-xMax, xMax, -yMax, yMax, -zMax, zMax);
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+// 	gluLookAt((xMin + xMax) / 2, (yMin + yMax) / 2, zMin,
+// 		(xMin + xMax) / 2, (yMin + yMax) / 2, (zMin + zMax) / 2,
+// 		(xMin + xMax) / 2, yMax, zMin);
 
 }
 
@@ -57,7 +61,7 @@ void OpenGLplot::paintEvent(QPaintEvent *e)
 
 	//////////Paint points////////
 	glLoadIdentity();
-	glTranslatef(-((xMax + xMin) / 2), -((yMax + yMin) / 2), 0.0);
+	//glTranslatef(-((xMax + xMin) / 2), -((yMax + yMin) / 2), 0.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_POINTS);
@@ -65,13 +69,14 @@ void OpenGLplot::paintEvent(QPaintEvent *e)
 	{
 		reader.ReadNextPoint();
 		liblas::Point const &p = reader.GetPoint();
-		glVertex3d(p.GetX(), p.GetY(), -2.0);
+		glVertex3d(p.GetX(), p.GetY(), p.GetZ());
 	}
 	glEnd();
 
 	qDebug() << "numero de puntos: " << header.GetPointRecordsCount() << "\n";
-	qDebug() << "Datos de ortho: " << -((xMax - xMin) / 2) << ", " << (xMax - xMin) / 2 << "; " << (yMax - yMin) / 2 << ", " << -((yMax - yMin) / 2) << "; " << 1.0 << ", " << zMax - zMin + 3.0 << "\n";
-	qDebug() << "Datos de translatef: " << -((xMin + xMax) / 2) << ", " << -((yMin + yMax) / 2) << ", " << -((zMin + zMax) / 2) - 2.0 << "\n";
+	qDebug() << "Datos de ortho: " << xMin << ", " << xMax << "; " << yMin << ", " << yMax << "; " << zMin << ", " << zMax << "\n";
+	qDebug() << "Datos de lookAt: " << (xMin + xMax) / 2 << ", " << (yMin + yMax) / 2 << ", " << zMin << "; " << (xMin + xMax) / 2 << ", " << (yMin + yMax) / 2 << ", " << (zMin + zMax) / 2 << "; " << (xMin + xMax) / 2 << ", " << yMax << ", " << zMin << "\n";
+	//qDebug() << "Datos de translatef: " << -((xMin + xMax) / 2) << ", " << -((yMin + yMax) / 2) << ", " << -((zMin + zMax) / 2) - 2.0 << "\n";
 	//qDebug() << "Resta " << p.GetX() - xMin << ", " << xMax - p.GetX() << "; " << p.GetY() - yMin << ", " << yMax - p.GetY() << "\n";
 	liblas::Point const &p = reader.GetPoint();
 	qDebug() << p.GetX() << ", " << p.GetY() << ", " << p.GetZ() << "\n";

@@ -39,16 +39,18 @@ void OpenGLplot::initializeGL()
 
 void OpenGLplot::resizeGL(int w, int h)
 {
-	GLfloat dx, dy = 1.0;
+	GLdouble dx = 1.0, dy = 1.0;
 	if (w > h){
-		dx = (GLfloat)w / (GLfloat)h;
+		dx = w / (GLdouble)h;
 	}
 	if (h > w){
-		dy = (GLfloat)h / (GLfloat)w;
+		dy = h / (GLdouble)w;
 	}
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(xMin, xMax, yMin, yMax, zMin, zMax);
+	glOrtho(xMin, xMax + (xMax - xMin)*(dx - 1),
+		yMin, yMax + (yMax - yMin)*(dy - 1),
+		zMin, zMax);
 	glMatrixMode(GL_MODELVIEW);
 	glViewport(0, 0, w, h);
 

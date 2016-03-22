@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -31,6 +32,7 @@ public:
     QAction *actionClose;
     QAction *actionExit;
     QWidget *centralWidget;
+    QGridLayout *gridLayout;
     OpenGLplot *openGLplot;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -41,7 +43,7 @@ public:
     {
         if (LaserMapClass->objectName().isEmpty())
             LaserMapClass->setObjectName(QStringLiteral("LaserMapClass"));
-        LaserMapClass->resize(503, 555);
+        LaserMapClass->resize(518, 571);
         actionOpen = new QAction(LaserMapClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionClose = new QAction(LaserMapClass);
@@ -50,20 +52,25 @@ public:
         actionExit->setObjectName(QStringLiteral("actionExit"));
         centralWidget = new QWidget(LaserMapClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        gridLayout = new QGridLayout(centralWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         openGLplot = new OpenGLplot(centralWidget);
         openGLplot->setObjectName(QStringLiteral("openGLplot"));
-        openGLplot->setGeometry(QRect(0, -1, 500, 500));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(openGLplot->sizePolicy().hasHeightForWidth());
         openGLplot->setSizePolicy(sizePolicy);
         openGLplot->setMinimumSize(QSize(500, 500));
-        openGLplot->setMaximumSize(QSize(500, 500));
+
+        gridLayout->addWidget(openGLplot, 0, 0, 1, 1);
+
         LaserMapClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LaserMapClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 503, 21));
+        menuBar->setGeometry(QRect(0, 0, 518, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         LaserMapClass->setMenuBar(menuBar);

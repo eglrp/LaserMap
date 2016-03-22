@@ -3,8 +3,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/qopenglwidget.h>
 #include <QtOpenGL>
-#include <qopenglcontext.h>
-#include <gl\GLU.h>
 #include <liblas/liblas.hpp>
 #include <fstream>  // std::ifstream
 #include <iostream>
@@ -17,18 +15,21 @@ class OpenGLplot : public QOpenGLWidget, protected QOpenGLFunctions
 
 public:
 	OpenGLplot(QWidget *parent);
-	~OpenGLplot();	
+	~OpenGLplot();
 
 protected:
 	virtual void initializeGL();
 	virtual void paintEvent(QPaintEvent *e);
 	virtual void resizeGL(int w, int h);
 
-public slots:
+	public slots:
 	void paintFileLAS(QString filename);
 
 private:
 	GLdouble xMin = 1.0, xMax = 1.0, yMin = 1.0, yMax = 1.0, zMin = 1.0, zMax = 1.0;
+	UINT32 numPuntos;
+	void setColor(liblas::Classification const &pointClass)
+		;
 };
 
 

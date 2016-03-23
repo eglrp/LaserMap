@@ -5,7 +5,6 @@ LaserMap::LaserMap(QWidget *parent)
 {
 	ui.setupUi(this);
 	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
-	connect(this, SIGNAL(fileSelected(QString)), ui.openGLplot, SLOT(paintFileLAS(QString)));
 	
 	ui.openGLplot->update();
 }

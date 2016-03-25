@@ -27,6 +27,7 @@ void OpenGLplot::initializeGL()
 	yLength = yMax - yMin;
 	zMin = header.GetMinZ();
 	zMax = header.GetMaxZ();
+	ratioMap = xLength / yLength;
 
 	initializeOpenGLFunctions();
 	glClearColor(0.0, 0.0, 0.0,0.0);
@@ -41,19 +42,19 @@ void OpenGLplot::initializeGL()
 void OpenGLplot::resizeGL(int w, int h)
 {
 	qDebug() << "reajustando";
-	GLdouble ratioRelation = (GLdouble)w / (GLdouble)h;
+	GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	if (xLength / yLength > ratioRelation)
+	if (ratioMap > ratioWidget)
 	{
 		glOrtho(xMin, xMax,
-			yMin - yLength*ratioRelation, yMax + yLength*ratioRelation,
+			yMin - (xLength * ((1 / ratioWidget) - (1 / ratioMap))) / 2, yMax + (xLength * ((1 / ratioWidget) - (1 / ratioMap))) / 2,
 			zMin, zMax);
 		 
 	}
 	else
 	{
-		glOrtho(xMin - xLength *ratioRelation, xMax + xLength *ratioRelation,
+		glOrtho(xMin - (xLength * (ratioWidget - ratioMap)) / 2, xMax + (xLength * (ratioWidget - ratioMap)) / 2,
 			yMin, yMax,
 			zMin, zMax);
 	}

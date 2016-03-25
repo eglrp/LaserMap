@@ -25,7 +25,7 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent *event);
 
 private:
-	GLdouble xMin = 1.0, xMax = 1.0, xLength = 2.0, yMin = 1.0, yMax = 1.0, yLength = 2.0, zMin = 1.0, zMax = 1.0;
+	GLdouble xMin = 1.0, xMax = 1.0, xLength = 2.0, yMin = 1.0, yMax = 1.0, yLength = 2.0, zMin = 1.0, zMax = 1.0, ratioMap = 1.0;
 	UINT32 numPuntos;
 	void setColor(liblas::Classification const &pointClass);
 	int initX, initY;

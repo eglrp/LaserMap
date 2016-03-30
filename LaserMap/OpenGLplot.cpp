@@ -28,8 +28,8 @@ void OpenGLplot::initializeGL()
 	zMin = header.GetMinZ();
 	zMax = header.GetMaxZ();
 	ratioMap = xLength / yLength;
-	mapCenter[0] = xMin + xLength / 2;
-	mapCenter[1] = yMin + yLength / 2;
+	mapCenter[0] = xMin + xLength / 2.0;
+	mapCenter[1] = yMin + yLength / 2.0;
 
 	initializeOpenGLFunctions();
 	glClearColor(0.0, 0.0, 0.0,0.0);
@@ -50,13 +50,13 @@ void OpenGLplot::resizeGL(int w, int h)
 	if (ratioMap > ratioWidget)
 	{
 		glOrtho(xMin, xMax,
-			yMin - (xLength * ((1 / ratioWidget) - (1 / ratioMap))) / 2, yMax + (xLength * ((1 / ratioWidget) - (1 / ratioMap))) / 2,
+			yMin - (xLength * ((1 / ratioWidget) - (1 / ratioMap))) / 2.0, yMax + (xLength * ((1 / ratioWidget) - (1 / ratioMap))) / 2.0,
 			zMin, zMax);
 		 
 	}
 	else
 	{
-		glOrtho(xMin - (xLength * (ratioWidget - ratioMap)) / 2, xMax + (xLength * (ratioWidget - ratioMap)) / 2,
+		glOrtho(xMin - (yLength * (ratioWidget - ratioMap)) / 2.0, xMax + (yLength * (ratioWidget - ratioMap)) / 2.0,
 			yMin, yMax,
 			zMin, zMax);
 	}
@@ -116,38 +116,46 @@ void OpenGLplot::mouseReleaseEvent(QMouseEvent *event)
 		int w = width();
 		//reducir el glortho
 		GLdouble percent;
-		if (ratioMap > ((GLdouble)w / (GLdouble)h)) //rango X = rango ventana
+		GLdouble zoomCenter[2];
+		GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
+		if (ratioMap > ratioWidget) //rango X = rango ventana
 		{
 			percent = 1 - abs(initX - event->x()) / (GLdouble)w;
+
+			zoomCenter[0] = xMin + xLength*(1 - ((initX + event->x()) / 2.0) / (GLdouble)w);
+			zoomCenter[1] = yMin + ((1 / ratioWidget) - (1 / ratioMap))*yLength*(((initY + event->y()) / 2.0) / (GLdouble)h);
+			
 		}
 		else
 		{
 			percent = 1 - abs(initY - event->y()) / (GLdouble)h;
+
+			zoomCenter[0] = xMin + (ratioWidget - ratioMap)*xLength*(((initX + event->x()) / 2.0) / (GLdouble)w);
+			zoomCenter[1] = yMin + yLength*(1 - ((initY + event->y()) / 2.0) / (GLdouble)h);
 		}
-		GLdouble zoomCenter[2] = {
-			xMin + xLength*(((initX + event->x()) / 2) / (GLdouble)w),
-			yMin + yLength*(((initY + event->y()) / 2) / (GLdouble)h),
-		};
+		
 		qDebug() << "mapCenter: " << mapCenter[0] << ", " << mapCenter[1] <<
 			"; ZoomCenter: " << mapCenter[0] << ", " << zoomCenter[1];
 
 		//reducir glortho
-		yMin = yMin + yLength*percent / 2;
-		yMax = yMax - yLength*percent / 2;
-		xMin = xMin + xLength*percent / 2;
-		xMax = xMax - xLength*percent / 2;
+// 		yMin = yMin + yLength*percent / 2;
+// 		yMax = yMax - yLength*percent / 2;
+// 		xMin = xMin + xLength*percent / 2;
+// 		xMax = xMax - xLength*percent / 2;
+
 		//centrar glortho con el centro del recuadro
-// 		GLdouble diference = zoomCenter[0] - mapCenter[0];
+ 		GLdouble diference = zoomCenter[0] - mapCenter[0];
+		qDebug() << "diference X: " << diference;
 // 		xMin = xMin + diference;
 // 		xMax = xMax + diference;
-// 		diference = zoomCenter[1] - mapCenter[1];
+		diference = zoomCenter[1] - mapCenter[1];
 // 		yMin = yMin + diference;
 // 		yMax = yMax + diference;
-
-		mapCenter[0] = zoomCenter[0];
-		mapCenter[1] = zoomCenter[1];
-		yLength = yMax - yMin;
-		xLength = xMax - xMin;
+		qDebug() << "diference Y: " << diference;
+// 		mapCenter[0] = zoomCenter[0];
+// 		mapCenter[1] = zoomCenter[1];
+// 		yLength = yMax - yMin;
+// 		xLength = xMax - xMin;
 
 		//relanzar resizeGL? o glortho
 	}
@@ -162,5 +170,6 @@ void OpenGLplot::mouseReleaseEvent(QMouseEvent *event)
 		mapCenter[0] = xMin + xLength / 2;
 		mapCenter[1] = yMin + yLength / 2;
 	}
+	this->update();
 }
 

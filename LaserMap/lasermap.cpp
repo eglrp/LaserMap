@@ -4,8 +4,11 @@ LaserMap::LaserMap(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
-	
+// 	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
+// 	connect(ui.actionZoom, SIGNAL(triggered()), this, SLOT(enableZoom()));
+// 	connect(ui.actionDrag, SIGNAL(triggered()), this, SLOT(enableDrag()));
+// 	connect(ui.actionHeightColor, SIGNAL(triggered()), this, SLOT(setHeightColor()));
+// 	connect(ui.actionClassColor, SIGNAL(triggered()), this, SLOT(setClassColor()));
 	ui.openGLplot->update();
 }
 
@@ -13,6 +16,10 @@ LaserMap::~LaserMap()
 {
 	
 }
+
+/////////////////////////////////////////////////////
+////////////////////////SLOTS////////////////////////
+/////////////////////////////////////////////////////
 
 void LaserMap::openFile()
 {
@@ -27,6 +34,15 @@ void LaserMap::openFile()
 // 		liblas::Reader reader = f.CreateWithStream(ifs);
 // 	
 	
-		emit fileSelected(filename);
 	}
+}
+
+/////////////////////////////////////////////////////
+//////////////////PRIVATE FUNCTIONS//////////////////
+/////////////////////////////////////////////////////
+
+
+bool LaserMap::isMapLoaded()
+{
+	return true;
 }

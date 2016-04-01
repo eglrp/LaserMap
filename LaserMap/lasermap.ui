@@ -60,6 +60,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionZoom"/>
+   <addaction name="actionDrag"/>
+   <addaction name="actionHeightColor"/>
+   <addaction name="actionClassColor"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -75,6 +79,26 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionZoom">
+   <property name="text">
+    <string>Zoom</string>
+   </property>
+  </action>
+  <action name="actionDrag">
+   <property name="text">
+    <string>Drag</string>
+   </property>
+  </action>
+  <action name="actionHeightColor">
+   <property name="text">
+    <string>HeightColor</string>
+   </property>
+  </action>
+  <action name="actionClassColor">
+   <property name="text">
+    <string>ClassColor</string>
    </property>
   </action>
  </widget>

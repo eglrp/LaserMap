@@ -5,6 +5,13 @@ OpenGLplot::OpenGLplot(QWidget *parent)
 {
 }
 
+
+OpenGLplot::OpenGLplot(QWidget *parent, QString filenameIn)
+	:QOpenGLWidget(parent)
+{
+	filename = filenameIn;
+}
+
 OpenGLplot::~OpenGLplot()
 {
 }
@@ -122,42 +129,17 @@ void OpenGLplot::mouseReleaseEvent(QMouseEvent *event)
 		{
 			percent = 1 - abs(initX - event->x()) / (GLdouble)w;
 
-			zoomCenter[0] = xMin + xLength*(1 - ((initX + event->x()) / 2.0) / (GLdouble)w);
-			zoomCenter[1] = yMin + ((1 / ratioWidget) - (1 / ratioMap))*yLength*(((initY + event->y()) / 2.0) / (GLdouble)h);
-			
+			zoomCenter[0] = xMin + xLength*(((initX + event->x()) / 2.0) / (GLdouble)w);
+			zoomCenter[1] = yMin - (xLength * ((1 / ratioWidget) - (1 / ratioMap))) / 2.0 + (yLength + (xLength * ((1 / ratioWidget) - (1 / ratioMap)))) * (1 - ((initY + event->y()) / 2.0) / (GLdouble)h);
 		}
 		else
 		{
 			percent = 1 - abs(initY - event->y()) / (GLdouble)h;
 
-			zoomCenter[0] = xMin + (ratioWidget - ratioMap)*xLength*(((initX + event->x()) / 2.0) / (GLdouble)w);
 			zoomCenter[1] = yMin + yLength*(1 - ((initY + event->y()) / 2.0) / (GLdouble)h);
+			zoomCenter[0] = xMin - (yLength * (ratioWidget - ratioMap)) / 2.0 + (xLength + (yLength * (ratioWidget - ratioMap))) * ((initX + event->x()) / 2.0) / (GLdouble)w;
 		}
-		
-		qDebug() << "mapCenter: " << mapCenter[0] << ", " << mapCenter[1] <<
-			"; ZoomCenter: " << mapCenter[0] << ", " << zoomCenter[1];
-
-		//reducir glortho
-// 		yMin = yMin + yLength*percent / 2;
-// 		yMax = yMax - yLength*percent / 2;
-// 		xMin = xMin + xLength*percent / 2;
-// 		xMax = xMax - xLength*percent / 2;
-
-		//centrar glortho con el centro del recuadro
- 		GLdouble diference = zoomCenter[0] - mapCenter[0];
-		qDebug() << "diference X: " << diference;
-// 		xMin = xMin + diference;
-// 		xMax = xMax + diference;
-		diference = zoomCenter[1] - mapCenter[1];
-// 		yMin = yMin + diference;
-// 		yMax = yMax + diference;
-		qDebug() << "diference Y: " << diference;
-// 		mapCenter[0] = zoomCenter[0];
-// 		mapCenter[1] = zoomCenter[1];
-// 		yLength = yMax - yMin;
-// 		xLength = xMax - xMin;
-
-		//relanzar resizeGL? o glortho
+		zoomGlortho(zoomCenter, &percent);
 	}
 	else if (event->button() == Qt::RightButton)
 	{
@@ -170,6 +152,27 @@ void OpenGLplot::mouseReleaseEvent(QMouseEvent *event)
 		mapCenter[0] = xMin + xLength / 2;
 		mapCenter[1] = yMin + yLength / 2;
 	}
-	this->update();
+}
+
+void OpenGLplot::zoomGlortho(GLdouble zoomCenter[], GLdouble *percent)
+{
+	//reducir glortho
+	yMin = yMin + yLength*(*percent) / 2;
+	yMax = yMax - yLength*(*percent) / 2;
+	xMin = xMin + xLength*(*percent) / 2;
+	xMax = xMax - xLength*(*percent) / 2;
+
+	//centrar glortho con el centro del recuadro
+	GLdouble diference = zoomCenter[0] - mapCenter[0];
+	xMin = xMin + diference;
+	xMax = xMax + diference;
+	diference = zoomCenter[1] - mapCenter[1];
+	yMin = yMin + diference;
+	yMax = yMax + diference;
+	mapCenter[0] = zoomCenter[0];
+	mapCenter[1] = zoomCenter[1];
+	yLength = yMax - yMin;
+	xLength = xMax - xMin;
+	//relanzar resizeGL? o glortho
 }
 

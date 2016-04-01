@@ -20,6 +20,7 @@ signals:
 
 private:
 	Ui::LaserMapClass ui;
+	bool isMapLoaded();
 
 private slots:
 	void openFile();

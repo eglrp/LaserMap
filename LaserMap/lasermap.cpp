@@ -10,6 +10,13 @@ LaserMap::LaserMap(QWidget *parent)
 // 	connect(ui.actionHeightColor, SIGNAL(triggered()), this, SLOT(setHeightColor()));
 // 	connect(ui.actionClassColor, SIGNAL(triggered()), this, SLOT(setClassColor()));
 	ui.openGLplot->update();
+
+// 	setLayout(new QGridLayout);
+// 	QGridLayout *mainLayout = new QGridLayout;
+// 	OpenGLplot *openGLplot1 = new OpenGLplot(ui.centralWidget, "Hola");
+// 	mainLayout->addWidget(openGLplot1);
+// 	ui.centralWidget->setLayout(mainLayout);
+	
 }
 
 LaserMap::~LaserMap()

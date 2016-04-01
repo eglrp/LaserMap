@@ -14,6 +14,7 @@ OpenGLplot::OpenGLplot(QWidget *parent, QString filenameIn)
 
 OpenGLplot::~OpenGLplot()
 {
+	qDeleteAll(pointList);
 }
 
 void OpenGLplot::initializeGL()
@@ -25,7 +26,6 @@ void OpenGLplot::initializeGL()
 	liblas::ReaderFactory f;
 	liblas::Reader reader = f.CreateWithStream(ifs);
 	liblas::Header const &header = reader.GetHeader();
-	numPuntos = header.GetPointRecordsCount();
 	xMinInit = xMin = header.GetMinX();
 	xMaxInit = xMax = header.GetMaxX();
 	xLengthInit = xLength = xMax - xMin;
@@ -37,6 +37,15 @@ void OpenGLplot::initializeGL()
 	ratioMap = xLength / yLength;
 	mapCenter[0] = xMin + xLength / 2.0;
 	mapCenter[1] = yMin + yLength / 2.0;
+
+	//Read points
+	UINT32 numPoints = header.GetPointRecordsCount();
+	for (int i = 0; i < numPoints; i++)
+	{
+		reader.ReadNextPoint();
+		liblas::Point const &p = reader.GetPoint();
+		pointList.append(new LaserPoint(p.GetX(), p.GetY(), p.GetZ(), p.GetIntensity(), p.GetClassification().GetClass()));
+	}
 
 	initializeOpenGLFunctions();
 	glClearColor(0.0, 0.0, 0.0,0.0);
@@ -73,27 +82,20 @@ void OpenGLplot::resizeGL(int w, int h)
 
 void OpenGLplot::paintEvent(QPaintEvent *e)
 {
-	///////Open LAS file///////
-	std::ifstream ifs;
-	ifs.open("C:/Users/Italo/Mis archivos/Universidad/1.-TfG/73.las", std::ios::in | std::ios::binary);
-	if (ifs.is_open())
-		qDebug() << "repintando";
-	liblas::ReaderFactory f;
-	liblas::Reader reader = f.CreateWithStream(ifs);
-
+	qDebug() << "repintando";
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_POINTS);
-	for (int i = 0; i < numPuntos; i++)
+	for (int i = 0; i < pointList.size(); i++)
 	{
-		reader.ReadNextPoint();
-		liblas::Point const &p = reader.GetPoint();
 		//setColor(p.GetClassification());
-		GLfloat normalizeZ = (p.GetZ() - zMin) / (zMax - zMin);
+		LaserPoint *p = pointList.at(i);
+		GLfloat normalizeZ = (p->getZ() - zMin) / (zMax - zMin);
 		glColor3f(normalizeZ, normalizeZ, normalizeZ);
-		glVertex3d(p.GetX(), p.GetY(), -p.GetZ());
+		glVertex3d(p->getX(), p->getY(), -(p->getZ()));
+
 	}
 	glEnd();
 }

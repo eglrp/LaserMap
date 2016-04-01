@@ -6,6 +6,7 @@
 #include "qfiledialog.h"
 #include <QList>
 #include <liblas/liblas.hpp>
+#include "OpenGLplot.h"
 
 class LaserMap : public QMainWindow
 {

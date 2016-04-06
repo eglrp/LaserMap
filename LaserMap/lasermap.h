@@ -7,6 +7,7 @@
 #include <QList>
 #include <liblas/liblas.hpp>
 #include "OpenGLplot.h"
+#include "LaserPointList.h"
 
 class LaserMap : public QMainWindow
 {
@@ -21,6 +22,7 @@ signals:
 
 private:
 	Ui::LaserMapClass ui;
+	LaserPointList laserPointList;
 	bool isMapLoaded();
 
 private slots:

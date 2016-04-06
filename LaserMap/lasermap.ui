@@ -12,19 +12,15 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>500</height>
+    <width>100</width>
+    <height>100</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>LaserMap</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="OpenGLplot" name="openGLplot"/>
-    </item>
-   </layout>
+   <layout class="QGridLayout" name="gridLayout"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -96,13 +92,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>OpenGLplot</class>
-   <extends>QOpenGLWidget</extends>
-   <header>OpenGLplot.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="lasermap.qrc"/>
  </resources>

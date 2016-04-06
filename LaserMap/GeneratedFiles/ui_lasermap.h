@@ -21,7 +21,6 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
-#include "OpenGLplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -37,7 +36,6 @@ public:
     QAction *actionClassColor;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    OpenGLplot *openGLplot;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -48,7 +46,7 @@ public:
         if (LaserMapClass->objectName().isEmpty())
             LaserMapClass->setObjectName(QStringLiteral("LaserMapClass"));
         LaserMapClass->resize(500, 500);
-        LaserMapClass->setMinimumSize(QSize(500, 500));
+        LaserMapClass->setMinimumSize(QSize(100, 100));
         actionOpen = new QAction(LaserMapClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionClose = new QAction(LaserMapClass);
@@ -69,11 +67,6 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        openGLplot = new OpenGLplot(centralWidget);
-        openGLplot->setObjectName(QStringLiteral("openGLplot"));
-
-        gridLayout->addWidget(openGLplot, 0, 0, 1, 1);
-
         LaserMapClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LaserMapClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));

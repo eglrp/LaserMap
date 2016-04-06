@@ -4,19 +4,17 @@ LaserMap::LaserMap(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-// 	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
+ 	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
 // 	connect(ui.actionZoom, SIGNAL(triggered()), this, SLOT(enableZoom()));
 // 	connect(ui.actionDrag, SIGNAL(triggered()), this, SLOT(enableDrag()));
 // 	connect(ui.actionHeightColor, SIGNAL(triggered()), this, SLOT(setHeightColor()));
 // 	connect(ui.actionClassColor, SIGNAL(triggered()), this, SLOT(setClassColor()));
-	ui.openGLplot->update();
 
-// 	setLayout(new QGridLayout);
-// 	QGridLayout *mainLayout = new QGridLayout;
-// 	OpenGLplot *openGLplot1 = new OpenGLplot(ui.centralWidget, "Hola");
-// 	mainLayout->addWidget(openGLplot1);
-// 	ui.centralWidget->setLayout(mainLayout);
-	
+
+
+// 	OpenGLplot * map2D = new OpenGLplot(ui.centralWidget, "Hola");
+// 	ui.gridLayout->addWidget(map2D, 0, 0);
+// 	map2D->update();
 }
 
 LaserMap::~LaserMap()
@@ -30,17 +28,21 @@ LaserMap::~LaserMap()
 
 void LaserMap::openFile()
 {
-	QString filename = QFileDialog::getOpenFileName(this, tr("Open las file"), "", tr("Laser Files(*.las)"));
-	if (filename != NULL)
-	{
- 		QString filename;
-// 	
-// 		std::ifstream ifs;
-// 		ifs.open(filename.toStdString(), std::ios::in | std::ios::binary);
-// 		liblas::ReaderFactory f;
-// 		liblas::Reader reader = f.CreateWithStream(ifs);
-// 	
-	
+	QString filename = "C:/Users/Italo/Mis archivos/Universidad/1.-TfG/73.las";
+// 	QString filename = QFileDialog::getOpenFileName(this, tr("Open las file"), "", tr("Laser Files(*.las)"));
+ 	if (filename != NULL)
+ 	{
+		//Lanzar el cargador
+
+		//Esperar a que termine para luego...
+
+		//Create Grid layout
+		OpenGLplot * map2D = new OpenGLplot(ui.centralWidget, "Hola");
+		//OpenGLplot * map3D = new OpenGLplot(ui.centralWidget, "Hola");
+		ui.gridLayout->addWidget(map2D, 0, 0);
+		//ui.gridLayout->addWidget(map3D, 0, 1);
+		map2D->update();
+		//map3D->update();
 	}
 }
 

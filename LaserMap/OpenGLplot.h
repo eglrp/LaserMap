@@ -9,13 +9,14 @@
 #include <QList>
 #include <QDebug>
 #include "laserpoint.h"
+#include "LaserPointList.h"
 
 class OpenGLplot : public QOpenGLWidget, protected QOpenGLFunctions
 {
 	Q_OBJECT
 
 public:
-	OpenGLplot::OpenGLplot(QWidget *parent, QString filenameIn);
+	OpenGLplot::OpenGLplot(QWidget *parent, LaserPointList *laserPointListIn);
 	OpenGLplot(QWidget *parent);
 	~OpenGLplot();
 
@@ -34,7 +35,7 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent *event);
 
 private:
-	QString filename;
+	LaserPointList *laserPointList;
 	QList<LaserPoint*> pointList;
 	GLdouble xMin = 1.0, xMax = 1.0, xLength = 2.0, yMin = 1.0, yMax = 1.0, yLength = 2.0, zMin = 1.0, zMax = 1.0, ratioMap = 1.0;
 	GLdouble xMinInit = 1.0, xMaxInit = 1.0, xLengthInit = 2.0, yMinInit = 1.0, yMaxInit = 1.0, yLengthInit = 2.0;

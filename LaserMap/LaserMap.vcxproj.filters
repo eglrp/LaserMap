@@ -65,6 +65,15 @@
     <ClCompile Include="LaserPointList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="laserpointlistloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_laserpointlistloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_laserpointlistloader.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="lasermap.h">
@@ -80,6 +89,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="laserpoint.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="laserpointlistloader.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

@@ -6,10 +6,10 @@ OpenGLplot::OpenGLplot(QWidget *parent)
 }
 
 
-OpenGLplot::OpenGLplot(QWidget *parent, QString filenameIn)
+OpenGLplot::OpenGLplot(QWidget *parent, LaserPointList *laserPointListIn)
 	:QOpenGLWidget(parent)
 {
-	filename = filenameIn;
+	laserPointList = laserPointListIn;
 }
 
 OpenGLplot::~OpenGLplot()

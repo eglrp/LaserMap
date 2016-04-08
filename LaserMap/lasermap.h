@@ -28,7 +28,7 @@ private:
 	Ui::LaserMapClass ui;
 	LaserPointList *laserPointList = NULL;
 	LaserPointListLoader laserPointListLoader;
-	bool isMapLoaded();
+	OpenGLplot * map2D = NULL;
 
 private slots:
 	void openFile();

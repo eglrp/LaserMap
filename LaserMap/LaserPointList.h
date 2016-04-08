@@ -9,13 +9,15 @@ public:
 	LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMaxIn, GLdouble yMinIn, GLdouble zMaxIn, GLdouble zMinIn);
 	~LaserPointList();
 	void add(LaserPoint point);
+	void resetData();
+	GLdouble getRatioMap();
 	QList<LaserPoint>* getList();
+	GLdouble xMin, xMax, xLength, yMin, yMax, yLength, zMin, zMax;
+	GLdouble mapCenter[2];
 
 private:
 	QList<LaserPoint> pointList;
-	GLdouble xMin, xMax, xLength, yMin, yMax, yLength, zMin, zMax, ratioMap;
-	GLdouble xMinInit, xMaxInit, xLengthInit, yMinInit, yMaxInit, yLengthInit;
-	GLdouble mapCenter[2];
+	GLdouble xMinInit, xMaxInit, xLengthInit, yMinInit, yMaxInit, yLengthInit, ratioMap;
 };
 
 #endif

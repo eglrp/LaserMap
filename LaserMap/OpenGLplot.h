@@ -3,13 +3,14 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/qopenglwidget.h>
 #include <QtOpenGL>
-#include <liblas/liblas.hpp>
-#include <fstream>  // std::ifstream
-#include <iostream>
 #include <QList>
 #include <QDebug>
 #include "laserpoint.h"
 #include "LaserPointList.h"
+#define DRAG_MODE 0
+#define ZOOM_MODE 1
+#define DISTANCE_MODE 2
+#define AREA_MODE 3
 
 class OpenGLplot : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -20,12 +21,11 @@ public:
 	OpenGLplot(QWidget *parent);
 	~OpenGLplot();
 
-// public slots:
-// 	void openFile(QString filename);
-// 	void enableDrag();
-// 	void enableZoom();
-// 	void setHeightColor();
-// 	void setClassColor();
+public slots:
+	void enableDrag();
+	void enableZoom();
+	void setHeightColor();
+	void setClassColor();
 
 protected:
 	virtual void initializeGL();
@@ -37,12 +37,9 @@ protected:
 private:
 	LaserPointList *laserPointList;
 	QList<LaserPoint*> pointList;
-	GLdouble xMin = 1.0, xMax = 1.0, xLength = 2.0, yMin = 1.0, yMax = 1.0, yLength = 2.0, zMin = 1.0, zMax = 1.0, ratioMap = 1.0;
-	GLdouble xMinInit = 1.0, xMaxInit = 1.0, xLengthInit = 2.0, yMinInit = 1.0, yMaxInit = 1.0, yLengthInit = 2.0;
-	GLdouble mapCenter[2];
 	int initX, initY;
-
-	void setColor(liblas::Classification const &pointClass);
+	int mouseMode = 0;
+	void setColor(GLshort classification);
 	void zoomGlortho(GLdouble zoomCenter[], GLdouble *percent);
 };
 

@@ -24,7 +24,7 @@ LaserMap::~LaserMap()
 	if (map2D != NULL)
 		delete map2D;
 	if (map3D != NULL)
-		delete map2D;
+		delete map3D;
 }
 
 /////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ void LaserMap::createOpenGLWidget(LaserPointList *laserPointListIn)
 	if (map2D == NULL)
 	{
 		map2D = new OpenGLplot(ui.centralWidget, laserPointList);
-		OpenGLplot * map3D = new OpenGLplot(ui.centralWidget, laserPointList);
+		//OpenGLplot * map3D = new OpenGLplot(ui.centralWidget, laserPointList);
 		ui.gridLayout->addWidget(map2D, 0, 0);
 		//ui.gridLayout->addWidget(map3D, 0, 1);
 		map2D->update();

@@ -14,6 +14,7 @@ LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn
 	ratioMap = xLength / yLength;
 	mapCenter[0] = xMin + xLength / 2.0;
 	mapCenter[1] = yMin + yLength / 2.0;
+	percent = 1.0;
 }
 
 
@@ -41,6 +42,7 @@ void LaserPointList::resetData()
 	yLength = yLengthInit;
 	mapCenter[0] = xMin + xLength / 2;
 	mapCenter[1] = yMin + yLength / 2;
+	percent = 1.0;
 }
 
 GLdouble LaserPointList::getRatioMap()

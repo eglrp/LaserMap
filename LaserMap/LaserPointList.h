@@ -12,7 +12,7 @@ public:
 	void resetData();
 	GLdouble getRatioMap();
 	QList<LaserPoint>* getList();
-	GLdouble xMin, xMax, xLength, yMin, yMax, yLength, zMin, zMax;
+	GLdouble xMin, xMax, xLength, yMin, yMax, yLength, zMin, zMax, percent;
 	GLdouble mapCenter[2];
 
 private:

@@ -29,6 +29,7 @@ private:
 	LaserPointList *laserPointList = NULL;
 	LaserPointListLoader laserPointListLoader;
 	OpenGLplot * map2D = NULL;
+	OpenGLplot * map3D = NULL;
 
 private slots:
 	void openFile();

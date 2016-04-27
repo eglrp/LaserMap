@@ -42,10 +42,10 @@ private:
 	int mouseMode = ZOOM_MODE;
 	void updateGlOrtho(GLdouble ratioWidget);
 	void setColor(GLshort classification);
-	void zoomGlortho(GLdouble *percent);
-	void mooveGlortho(GLdouble mooveCenter[]);
-	GLdouble translatePointX(int x);
-	GLdouble translatePointY(int y);
+	void zoomGlOrtho(GLdouble *percent);
+	void dragGlOrtho(GLdouble increment[]);
+	GLdouble translatePointX(GLdouble x);
+	GLdouble translatePointY(GLdouble y);
 };
 
 

@@ -53,6 +53,7 @@
    <addaction name="actionDrag"/>
    <addaction name="actionHeightColor"/>
    <addaction name="actionClassColor"/>
+   <addaction name="action3D"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -88,6 +89,11 @@
   <action name="actionClassColor">
    <property name="text">
     <string>ClassColor</string>
+   </property>
+  </action>
+  <action name="action3D">
+   <property name="text">
+    <string>3D</string>
    </property>
   </action>
  </widget>

@@ -34,6 +34,7 @@ public:
     QAction *actionDrag;
     QAction *actionHeightColor;
     QAction *actionClassColor;
+    QAction *action3D;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMenuBar *menuBar;
@@ -61,6 +62,8 @@ public:
         actionHeightColor->setObjectName(QStringLiteral("actionHeightColor"));
         actionClassColor = new QAction(LaserMapClass);
         actionClassColor->setObjectName(QStringLiteral("actionClassColor"));
+        action3D = new QAction(LaserMapClass);
+        action3D->setObjectName(QStringLiteral("action3D"));
         centralWidget = new QWidget(LaserMapClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -90,6 +93,7 @@ public:
         mainToolBar->addAction(actionDrag);
         mainToolBar->addAction(actionHeightColor);
         mainToolBar->addAction(actionClassColor);
+        mainToolBar->addAction(action3D);
 
         retranslateUi(LaserMapClass);
 
@@ -106,6 +110,7 @@ public:
         actionDrag->setText(QApplication::translate("LaserMapClass", "Drag", 0));
         actionHeightColor->setText(QApplication::translate("LaserMapClass", "HeightColor", 0));
         actionClassColor->setText(QApplication::translate("LaserMapClass", "ClassColor", 0));
+        action3D->setText(QApplication::translate("LaserMapClass", "3D", 0));
         menuFile->setTitle(QApplication::translate("LaserMapClass", "File", 0));
     } // retranslateUi
 

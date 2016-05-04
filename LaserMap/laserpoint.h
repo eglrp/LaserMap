@@ -11,6 +11,8 @@ public:
 		GLdouble zIn,
 		GLshort intensityIn,
 		GLshort classificationIn);
+	LaserPoint(GLdouble xIn,
+		GLdouble yIn);
 	LaserPoint();
 	~LaserPoint();
 	GLdouble getX();

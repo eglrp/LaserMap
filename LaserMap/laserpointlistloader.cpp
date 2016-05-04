@@ -14,7 +14,7 @@ void LaserPointListLoader::run()
 {
 	emit loadingLaserPointList();
 	std::ifstream ifs;
-	ifs.open("C:/Users/Italo/Mis archivos/Universidad/1.-TfG/73.las", std::ios::in | std::ios::binary);
+	ifs.open(filename.toStdString(), std::ios::in | std::ios::binary);
 	if (ifs.is_open())
 	{
 		liblas::ReaderFactory f;

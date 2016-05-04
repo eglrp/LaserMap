@@ -17,6 +17,11 @@ LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn
 	percent = 1.0;
 }
 
+LaserPointList::LaserPointList()
+{
+
+}
+
 
 LaserPointList::~LaserPointList()
 {

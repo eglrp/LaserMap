@@ -15,6 +15,12 @@ LaserPoint::LaserPoint(GLdouble xIn, GLdouble yIn, GLdouble zIn, GLshort intensi
 	classification = classificationIn;
 }
 
+LaserPoint::LaserPoint(GLdouble xIn, GLdouble yIn)
+{
+	x = xIn;
+	y = yIn;
+}
+
 LaserPoint::~LaserPoint()
 {
 

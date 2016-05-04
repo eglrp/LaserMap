@@ -6,9 +6,11 @@
 #include "qfiledialog.h"
 #include <QList>
 #include <liblas/liblas.hpp>
-#include "OpenGLplot.h"
+
+#include "OpenGL2D.h"
 #include "LaserPointList.h"
 #include "laserpointlistloader.h"
+#include "field3dloader.h"
 
 class LaserMap : public QMainWindow
 {
@@ -17,19 +19,20 @@ class LaserMap : public QMainWindow
 public:
 	LaserMap(QWidget *parent = 0);
 	~LaserMap();
-		
-signals:
-	void fileSelected(QString filename);
 
 public slots:
-	void createOpenGLWidget(LaserPointList *laserPointList);
+	void createOpenGL2D(LaserPointList *laserPointListIn);
+	void createOpenGL3D(LaserPointList *laserPointListIn);
+	void create3DField(LaserPoint init, LaserPoint end);
 
 private:
 	Ui::LaserMapClass ui;
-	LaserPointList *laserPointList = NULL;
+	LaserPointList laserPointList;
 	LaserPointListLoader laserPointListLoader;
-	OpenGLplot * map2D = NULL;
-	OpenGLplot * map3D = NULL;
+	Field3DLoader fiel3DLoader;
+	OpenGL2D * map2D = NULL;
+	QMainWindow * window3D = NULL;
+	OpenGL3D * map3D = NULL;
 
 private slots:
 	void openFile();

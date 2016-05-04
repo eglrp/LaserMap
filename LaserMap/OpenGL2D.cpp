@@ -1,39 +1,37 @@
-#include "OpenGLplot.h"
+#include "OpenGL2D.h"
 
-OpenGLplot::OpenGLplot(QWidget *parent)
+OpenGL2D::OpenGL2D(QWidget *parent)
 	:QOpenGLWidget(parent)
 {
 }
 
 
-OpenGLplot::OpenGLplot(QWidget *parent, LaserPointList *laserPointListIn)
-	:QOpenGLWidget(parent)
+OpenGL2D::OpenGL2D(QWidget *parent, LaserPointList *laserPointListIn)
+	: QOpenGLWidget(parent)
 {
 	laserPointList = laserPointListIn;
 }
 
-OpenGLplot::~OpenGLplot()
+OpenGL2D::~OpenGL2D()
 {
-	qDeleteAll(pointList);
 }
 
 /////////////////////////////////////////////////////
 //////////////////OpenGL FUNCTIONS///////////////////
 /////////////////////////////////////////////////////
 
-void OpenGLplot::initializeGL()
+void OpenGL2D::initializeGL()
 {
 	initializeOpenGLFunctions();
-	glClearColor(0.0, 0.0, 0.0,0.0);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_DEPTH_TEST);
-
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 
-void OpenGLplot::resizeGL(int w, int h)
+void OpenGL2D::resizeGL(int w, int h)
 {
 	qDebug() << "reajustando";
 	GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
@@ -41,7 +39,7 @@ void OpenGLplot::resizeGL(int w, int h)
 	glViewport(0, 0, w, h);
 }
 
-void OpenGLplot::paintEvent(QPaintEvent *e)
+void OpenGL2D::paintEvent(QPaintEvent *e)
 {
 	qDebug() << "repintando";
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -61,7 +59,7 @@ void OpenGLplot::paintEvent(QPaintEvent *e)
 	glEnd();
 }
 
-void OpenGLplot::setColor(GLshort classification)
+void OpenGL2D::setColor(GLshort classification)
 {
 	GLfloat r;
 	GLfloat g;
@@ -69,7 +67,7 @@ void OpenGLplot::setColor(GLshort classification)
 	glColor3f(1.0, 1.0, 1.0);
 }
 
-void OpenGLplot::zoomGlOrtho(GLdouble *percent)
+void OpenGL2D::zoomGlOrtho(GLdouble *percent)
 {
 	laserPointList->yMin += laserPointList->yLength*(*percent) / 2;
 	laserPointList->yMax -= laserPointList->yLength*(*percent) / 2;
@@ -80,7 +78,7 @@ void OpenGLplot::zoomGlOrtho(GLdouble *percent)
 	laserPointList->percent *= (1 - (*percent));
 }
 
-void OpenGLplot::updateGlOrtho(GLdouble ratioWidget)
+void OpenGL2D::updateGlOrtho(GLdouble ratioWidget)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -100,7 +98,7 @@ void OpenGLplot::updateGlOrtho(GLdouble ratioWidget)
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void OpenGLplot::dragGlOrtho(GLdouble increment[])
+void OpenGL2D::dragGlOrtho(GLdouble increment[])
 {
 	laserPointList->xMin += increment[0];
 	laserPointList->xMax += increment[0];
@@ -111,10 +109,10 @@ void OpenGLplot::dragGlOrtho(GLdouble increment[])
 }
 
 /////////////////////////////////////////////////////
-/////////////////////MOUSE EVENTS////////////////////
+////////////////////////EVENTS///////////////////////
 /////////////////////////////////////////////////////
 
-void OpenGLplot::mousePressEvent(QMouseEvent *event)
+void OpenGL2D::mousePressEvent(QMouseEvent *event)
 {
 	switch (mouseMode)
 	{
@@ -132,12 +130,19 @@ void OpenGLplot::mousePressEvent(QMouseEvent *event)
 			initY = event->y();
 		}
 		break;
+	case FIELD3D_MODE:
+		if (event->button() == Qt::LeftButton)
+		{
+			initX = event->x();
+			initY = event->y();
+		}
+		break;
 	default:
 		break;
 	}
 }
 
-void OpenGLplot::mouseMoveEvent(QMouseEvent *event)
+void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 {
 	switch (mouseMode)
 	{
@@ -161,12 +166,19 @@ void OpenGLplot::mouseMoveEvent(QMouseEvent *event)
 			initY = event->y();
 		}
 		break;
+	case FIELD3D_MODE:
+		if (event->button() == Qt::LeftButton)
+		{
+			int a = 5;
+			//pintar recuadro
+		}
+		break;
 	default:
 		break;
 	}
 }
 
-void OpenGLplot::mouseReleaseEvent(QMouseEvent *event)
+void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 {
 	switch (mouseMode)
 	{
@@ -180,9 +192,9 @@ void OpenGLplot::mouseReleaseEvent(QMouseEvent *event)
 			GLdouble increment[2];
 			GLdouble ratioWidget = w / h;
 			//Calculate distance between Zoom Center and Map Center
- 			increment[0] = translatePointX(((initX + event->x()) / 2.0)) - laserPointList->mapCenter[0];
+			increment[0] = translatePointX(((initX + event->x()) / 2.0)) - laserPointList->mapCenter[0];
 			increment[1] = translatePointY(((initY + event->y()) / 2.0)) - laserPointList->mapCenter[1];
- 			//Calculate zoom Percent
+			//Calculate zoom Percent
 			if (laserPointList->getRatioMap() > ratioWidget) //rango X = rango ventana
 				percent = 1 - abs(initX - event->x()) / w;
 			else
@@ -210,13 +222,54 @@ void OpenGLplot::mouseReleaseEvent(QMouseEvent *event)
 			initY = event->y();
 		}
 		break;
+	case FIELD3D_MODE:
+		if (event->button() == Qt::LeftButton)
+		{
+			//capturar puntos
+			qDebug() << "enviando señal";
+			emit model3Dselected(*(new LaserPoint), *(new LaserPoint));
+		}
+		break;
 	default:
 		break;
 	}
-	
+
 }
 
-GLdouble OpenGLplot::translatePointX(GLdouble x)
+/////////////////////////////////////////////////////
+////////////////////////SLOTS////////////////////////
+/////////////////////////////////////////////////////
+
+void OpenGL2D::enableDrag()
+{
+	mouseMode = DRAG_MODE;
+}
+
+void OpenGL2D::enableZoom()
+{
+	mouseMode = ZOOM_MODE;
+}
+
+void OpenGL2D::enable3D()
+{
+	mouseMode = FIELD3D_MODE;
+}
+
+void OpenGL2D::setClassColor()
+{
+	int a = 5;
+}
+
+void OpenGL2D::setHeightColor()
+{
+	int a = 5;
+}
+
+/////////////////////////////////////////////////////
+//////////////////PRIVATE FUNCTIONS//////////////////
+/////////////////////////////////////////////////////
+
+GLdouble OpenGL2D::translatePointX(GLdouble x)
 {
 	GLdouble point;
 	GLdouble ratioWidget = width() / (GLdouble)height();
@@ -232,7 +285,7 @@ GLdouble OpenGLplot::translatePointX(GLdouble x)
 	return point;
 }
 
-GLdouble OpenGLplot::translatePointY(GLdouble y)
+GLdouble OpenGL2D::translatePointY(GLdouble y)
 {
 	GLdouble point;
 	GLdouble ratioWidget = width() / (GLdouble)height();
@@ -246,28 +299,4 @@ GLdouble OpenGLplot::translatePointY(GLdouble y)
 			(laserPointList->yLength + (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap())))) * (1 - y / (GLdouble)height());
 	}
 	return point;
-}
-
-/////////////////////////////////////////////////////
-////////////////////////SLOTS////////////////////////
-/////////////////////////////////////////////////////
-
-void OpenGLplot::enableDrag()
-{
-	mouseMode = DRAG_MODE;
-}
-
-void OpenGLplot::enableZoom()
-{
-	mouseMode = ZOOM_MODE;
-}
-
-void OpenGLplot::setClassColor()
-{
-	int a = 5;
-}
-
-void OpenGLplot::setHeightColor()
-{
-	int a = 5;
 }

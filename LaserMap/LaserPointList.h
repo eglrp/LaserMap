@@ -7,6 +7,7 @@ class LaserPointList
 {
 public:
 	LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMaxIn, GLdouble yMinIn, GLdouble zMaxIn, GLdouble zMinIn);
+	LaserPointList();
 	~LaserPointList();
 	void add(LaserPoint point);
 	void resetData();

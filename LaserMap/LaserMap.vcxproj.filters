@@ -50,15 +50,6 @@
     <ClCompile Include="GeneratedFiles\qrc_lasermap.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGLplot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_OpenGLplot.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_OpenGLplot.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="laserpoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,6 +65,33 @@
     <ClCompile Include="GeneratedFiles\Release\moc_laserpointlistloader.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpenGL2D.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpenGL2D.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpenGL3D.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpenGL3D.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="field3dloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_field3dloader.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_field3dloader.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="lasermap.h">
@@ -85,13 +103,19 @@
     <CustomBuild Include="lasermap.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="OpenGLplot.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="laserpoint.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="laserpointlistloader.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpenGL2D.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpenGL3D.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="field3dloader.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -108,5 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="LaserMap.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

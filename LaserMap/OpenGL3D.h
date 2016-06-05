@@ -18,12 +18,13 @@ public:
 	~OpenGL3D();
 
 private:
-	void updateGlOrtho(GLdouble ratioWidget);
 	LaserPointList *laserPointList;
 	int initX, initY;
 	void initializeGL();
-	void paintEvent(QPaintEvent *e);
+	void paintGL();
 	void resizeGL(int w, int h);
+
+	void updateGlOrtho(GLdouble ratioWidget);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);

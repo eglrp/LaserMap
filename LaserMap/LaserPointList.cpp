@@ -22,6 +22,20 @@ LaserPointList::LaserPointList()
 
 }
 
+LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn, GLdouble yMaxIn)
+{
+	xMinInit = xMin = xMinIn;
+	xMaxInit = xMax = xMaxIn;
+	xLengthInit = xLength = xMax - xMin;
+	yMinInit = yMin = yMinIn;
+	yMaxInit = yMax = yMaxIn;
+	yLengthInit = yLength = yMax - yMin;
+	ratioMap = xLength / yLength;
+	mapCenter[0] = xMin + xLength / 2.0;
+	mapCenter[1] = yMin + yLength / 2.0;
+	percent = 1.0;
+}
+
 
 LaserPointList::~LaserPointList()
 {

@@ -33,14 +33,14 @@ void OpenGL2D::initializeGL()
 
 void OpenGL2D::resizeGL(int w, int h)
 {
-	GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
-	updateGlOrtho(ratioWidget);
+	//GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
+	//updateGlOrtho(ratioWidget);
 	glViewport(0, 0, w, h);
 }
 
-void OpenGL2D::paintGL()
+void OpenGL2D::paintEvent(QPaintEvent *e)
 {
-	updateGlOrtho(width()/height());
+	updateGlOrtho(width()/(GLdouble)height());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glColor3f(1.0, 1.0, 1.0);
@@ -212,6 +212,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 		else if (event->button() == Qt::RightButton && mouseMode == ZOOM_MODE)
 		{
 			laserPointList->resetData();
+			repaint();
 		}
 		break;
 	case DRAG_MODE:

@@ -38,7 +38,10 @@ void Field3DLoader::run()
 		yMin = init.getY();
 	}
 	QList<LaserPoint> *pointList = laserPointList->getList();
-	LaserPointList *laserPointList3D = new LaserPointList();
+	LaserPointList *laserPointList3D = new LaserPointList(xMin, xMax, yMin, yMax);
+
+	laserPointList3D->zMax = laserPointList->zMin;
+	laserPointList3D->zMin = laserPointList->zMax;
 	for (int i = 0; i < pointList->size(); i++)
 	{
 		LaserPoint p = pointList->at(i);
@@ -46,7 +49,16 @@ void Field3DLoader::run()
 			p.getX() < xMax &&
 			p.getY() > yMin &&
 			p.getY() < yMax)
+		{
 			laserPointList3D->add(p);
+			if (p.getZ() > laserPointList3D->zMax)
+			{
+				laserPointList3D->zMax = p.getZ();
+			}
+			else if (p.getZ() < laserPointList3D->zMin)
+				laserPointList3D->zMin = p.getZ();
+		}
+		
 	}
 	emit loaded3DList(laserPointList3D);
 }

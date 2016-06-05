@@ -46,7 +46,7 @@ private:
 	GLdouble translatePointY(GLdouble y);
 	//QOpenGLFunctions inherited
 	void initializeGL();
-	void paintEvent(QPaintEvent *e);
+	void paintGL();
 	void resizeGL(int w, int h);
 	//QWidget events inherited
 	void mousePressEvent(QMouseEvent *event);

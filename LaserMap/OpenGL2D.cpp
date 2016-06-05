@@ -33,15 +33,14 @@ void OpenGL2D::initializeGL()
 
 void OpenGL2D::resizeGL(int w, int h)
 {
-	qDebug() << "reajustando";
 	GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
 	updateGlOrtho(ratioWidget);
 	glViewport(0, 0, w, h);
 }
 
-void OpenGL2D::paintEvent(QPaintEvent *e)
+void OpenGL2D::paintGL()
 {
-	qDebug() << "repintando";
+	updateGlOrtho(width()/height());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glColor3f(1.0, 1.0, 1.0);
@@ -151,6 +150,7 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 		{
 			int a = 5;
 			//pintar recuadro
+			repaint();
 		}
 		break;
 	case DRAG_MODE:
@@ -164,6 +164,9 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 			//Update init
 			initX = event->x();
 			initY = event->y();
+			qDebug() << "repintando...";
+			resizeGL(width(), height());
+			repaint();
 		}
 		break;
 	case FIELD3D_MODE:
@@ -171,6 +174,7 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 		{
 			int a = 5;
 			//pintar recuadro
+			repaint();
 		}
 		break;
 	default:
@@ -202,7 +206,8 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			//Adjust zoom and moove GlOrtho
 			zoomGlOrtho(&percent);
 			dragGlOrtho(increment);
-			updateGlOrtho(ratioWidget);
+			qDebug() << "repintando..";
+			repaint();
 		}
 		else if (event->button() == Qt::RightButton && mouseMode == ZOOM_MODE)
 		{
@@ -220,6 +225,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			//Update init
 			initX = event->x();
 			initY = event->y();
+			repaint();
 		}
 		break;
 	case FIELD3D_MODE:

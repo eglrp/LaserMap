@@ -28,6 +28,7 @@ public slots:
 private:
 	Ui::LaserMapClass ui;
 	LaserPointList laserPointList;
+	LaserPointList laserPointList3D;
 	LaserPointListLoader laserPointListLoader;
 	Field3DLoader fiel3DLoader;
 	OpenGL2D * map2D = NULL;

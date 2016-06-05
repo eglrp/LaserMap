@@ -71,9 +71,9 @@ void LaserMap::createOpenGL3D(LaserPointList *laserPointListIn)
 		delete map3D;
 	if (window3D != NULL)
 		delete window3D;
-	qDebug() << "creando ventana";
+	laserPointList3D = *laserPointListIn;
 	window3D = new QMainWindow();
-	map3D = new OpenGL3D(window3D, &laserPointList);
+	map3D = new OpenGL3D(window3D, &laserPointList3D);
 	window3D->setCentralWidget(map3D);
 	map3D->update();
 	window3D->show();

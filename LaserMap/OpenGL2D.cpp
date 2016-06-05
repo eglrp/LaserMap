@@ -147,14 +147,14 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 	switch (mouseMode)
 	{
 	case ZOOM_MODE:
-		if (event->button() == Qt::LeftButton)
+		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
 			int a = 5;
 			//pintar recuadro
 		}
 		break;
 	case DRAG_MODE:
-		if (event->button() == Qt::LeftButton)
+		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
 			//Moove from Init to actual Mouse coordinates
 			GLdouble increment[2];
@@ -167,7 +167,7 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 		}
 		break;
 	case FIELD3D_MODE:
-		if (event->button() == Qt::LeftButton)
+		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
 			int a = 5;
 			//pintar recuadro
@@ -225,9 +225,9 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 	case FIELD3D_MODE:
 		if (event->button() == Qt::LeftButton)
 		{
-			//capturar puntos
-			qDebug() << "enviando señal";
-			emit model3Dselected(*(new LaserPoint), *(new LaserPoint));
+			LaserPoint init = LaserPoint(translatePointX(initX), translatePointY(initY));
+			LaserPoint end = LaserPoint(translatePointX(event->x()), translatePointY(event->y()));
+			emit model3Dselected(init, end);
 		}
 		break;
 	default:

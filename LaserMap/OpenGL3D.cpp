@@ -14,7 +14,7 @@ OpenGL3D::OpenGL3D(QWidget *parent)
 
 OpenGL3D::~OpenGL3D()
 {
-	qDebug() << "me destruyeron";
+	//se llama al cerrar la ventana lasermap y cuando se crea un nuevo 3Dmap
 }
 
 /////////////////////////////////////////////////////

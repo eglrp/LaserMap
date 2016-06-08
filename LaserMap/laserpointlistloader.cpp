@@ -12,7 +12,6 @@ LaserPointListLoader::~LaserPointListLoader()
 
 void LaserPointListLoader::run()
 {
-	qDebug() << "cargando";
 	emit loadingLaserPointList();
 	std::ifstream ifs;
 	ifs.open(filename.toStdString(), std::ios::in | std::ios::binary);
@@ -21,7 +20,7 @@ void LaserPointListLoader::run()
 		liblas::ReaderFactory f;
 		liblas::Reader reader = f.CreateWithStream(ifs);
 		liblas::Header const &header = reader.GetHeader();
-		LaserPointList laserPointList(header.GetMinX(), header.GetMaxX(),
+		LaserPointList *laserPointList = new LaserPointList(header.GetMinX(), header.GetMaxX(),
 			header.GetMinY(), header.GetMaxY(),
 			header.GetMinZ(), header.GetMaxZ());
 
@@ -31,10 +30,9 @@ void LaserPointListLoader::run()
 		{
 			reader.ReadNextPoint();
 			liblas::Point const &p = reader.GetPoint();
-			laserPointList.add(LaserPoint(p.GetX(), p.GetY(), p.GetZ(), p.GetIntensity(), p.GetClassification().GetClass()) );
+			laserPointList->add(LaserPoint(p.GetX(), p.GetY(), p.GetZ(), p.GetIntensity(), p.GetClassification().GetClass()) );
 		}
 		emit loadedLaserPointList(laserPointList);
-		qDebug() << "cargado";
 	}
 }
 

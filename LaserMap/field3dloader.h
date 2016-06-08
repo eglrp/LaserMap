@@ -17,7 +17,7 @@ public:
 
 signals:
 	void loading3DList();
-	void loaded3DList(LaserPointList laserPointList);
+	void loaded3DList(LaserPointList *laserPointList);
 
 private:
 	LaserPoint init;

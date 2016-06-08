@@ -20,7 +20,7 @@ public:
 
 signals:
 	void loadingLaserPointList();
-	void loadedLaserPointList(LaserPointList laserPointList);
+	void loadedLaserPointList(LaserPointList *laserPointList);
 
 private:
 	QString filename;

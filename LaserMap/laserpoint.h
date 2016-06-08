@@ -15,7 +15,6 @@ public:
 		GLdouble yIn);
 	LaserPoint();
 	~LaserPoint();
-	LaserPoint generateCopy();
 	GLdouble getX();
 	GLdouble getY();
 	GLdouble getZ();

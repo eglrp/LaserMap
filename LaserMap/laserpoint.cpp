@@ -5,14 +5,18 @@ LaserPoint::LaserPoint()
 
 }
 
-LaserPoint::LaserPoint(GLdouble xIn, GLdouble yIn, GLdouble zIn, GLshort intensityIn, GLshort classificationIn)
-
+LaserPoint::LaserPoint(GLdouble xIn, GLdouble yIn, GLdouble zIn, GLshort intensityIn, GLshort classificationIn, GLdouble rIn,
+	GLdouble gIn,
+	GLdouble bIn)
 {
 	x = xIn;
 	y = yIn;
 	z = zIn;
 	intensity = intensityIn;
 	classification = classificationIn;
+	r = rIn;
+	g = gIn;
+	b = bIn;
 }
 
 LaserPoint::LaserPoint(GLdouble xIn, GLdouble yIn)
@@ -51,17 +55,17 @@ GLshort LaserPoint::getClassification()
 	return classification;
 }
 
-GLshort LaserPoint::getR()
+GLdouble LaserPoint::getR()
 {
 	return r;
 }
 
-GLshort LaserPoint::getG()
+GLdouble LaserPoint::getG()
 {
 	return g;
 }
 
-GLshort LaserPoint::getB()
+GLdouble LaserPoint::getB()
 {
 	return b;
 }

@@ -26,11 +26,18 @@ void LaserPointListLoader::run()
 
 		//Read points
 		UINT32 numPoints = header.GetPointRecordsCount();
+		GLdouble R;
+		GLdouble G;
+		GLdouble B;
 		for (int i = 0; i < numPoints; i++)
 		{
 			reader.ReadNextPoint();
 			liblas::Point const &p = reader.GetPoint();
-			laserPointList->add(LaserPoint(p.GetX(), p.GetY(), p.GetZ(), p.GetIntensity(), p.GetClassification().GetClass()) );
+			liblas::Color color = p.GetColor();
+			R = color.GetRed() / (GLdouble)65535;
+			G = color.GetGreen() / (GLdouble)65535;
+			B = color.GetBlue() / (GLdouble)65535;
+			laserPointList->add(LaserPoint(p.GetX(), p.GetY(), p.GetZ(), p.GetIntensity(), p.GetClassification().GetClass(), R, G, B));
 		}
 		emit loadedLaserPointList(laserPointList);
 	}

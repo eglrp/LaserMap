@@ -10,7 +10,10 @@ public:
 		GLdouble yIn,
 		GLdouble zIn,
 		GLshort intensityIn,
-		GLshort classificationIn);
+		GLshort classificationIn,
+		GLdouble rIn,
+		GLdouble gIn,
+		GLdouble bIn);
 	LaserPoint(GLdouble xIn,
 		GLdouble yIn);
 	LaserPoint();
@@ -20,9 +23,9 @@ public:
 	GLdouble getZ();
 	GLshort getIntensity();
 	GLshort getClassification();
-	GLshort getR();
-	GLshort getG();
-	GLshort getB();
+	GLdouble getR();
+	GLdouble getG();
+	GLdouble getB();
 
 private:
 	GLdouble x;
@@ -30,9 +33,9 @@ private:
 	GLdouble z;
 	GLshort intensity;
 	GLshort classification;
-	GLshort r;
-	GLshort g;
-	GLshort b;
+	GLdouble r;
+	GLdouble g;
+	GLdouble b;
 
 };
 

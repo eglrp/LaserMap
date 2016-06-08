@@ -4,6 +4,7 @@
 OpenGL3D::OpenGL3D(QWidget *parent, LaserPointList *laserPointListIn)
 {
 	laserPointList = laserPointListIn;
+	//laserPointList->translateToCenter();
 }
 
 OpenGL3D::OpenGL3D(QWidget *parent)

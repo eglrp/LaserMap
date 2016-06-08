@@ -49,21 +49,30 @@ void OpenGL2D::paintGL()
 	for (int i = 0; i < pointList->size(); i++)
 	{
 		LaserPoint p = pointList->at(i);
-		//setColor(p.GetClassification());
-		GLfloat normalizeZ = (p.getZ() - laserPointList->zMin) / (laserPointList->zMax - laserPointList->zMin);
-		glColor3f(normalizeZ, normalizeZ, normalizeZ);
+		setColor(p);
 		glVertex3d(p.getX(), p.getY(), -(p.getZ()));
 
 	}
 	glEnd();
 }
 
-void OpenGL2D::setColor(GLshort classification)
+void OpenGL2D::setColor(LaserPoint point)
 {
-	GLfloat r;
-	GLfloat g;
-	GLfloat b;
-	glColor3f(1.0, 1.0, 1.0);
+	switch (colorMode)
+	{
+	case REAL_COLOR:
+		glColor3f(point.getR(), point.getG(), point.getB());
+		break;
+	case INTENSITY_COLOR:
+		glColor3f(point.getIntensity(), point.getIntensity(), point.getIntensity());
+		break;
+	case CLASSIFICATION_COLOR:
+		break;
+	case HEIGHT_COLOR:
+		GLfloat normalizeZ = (point.getZ() - laserPointList->zMin) / (laserPointList->zMax - laserPointList->zMin);
+		glColor3f(normalizeZ, normalizeZ, normalizeZ);
+		break;
+	}
 }
 
 void OpenGL2D::zoomGlOrtho(GLdouble *percent)

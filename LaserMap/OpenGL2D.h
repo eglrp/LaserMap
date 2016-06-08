@@ -14,6 +14,11 @@
 #define AREA_MODE 3
 #define FIELD3D_MODE 4
 
+#define REAL_COLOR 0
+#define INTENSITY_COLOR 1
+#define CLASSIFICATION_COLOR 2
+#define HEIGHT_COLOR 3
+
 class OpenGL2D : public QOpenGLWidget, protected QOpenGLFunctions
 {
 	Q_OBJECT
@@ -37,9 +42,10 @@ private:
 	LaserPointList *laserPointList;
 	int initX, initY;
 	int mouseMode = ZOOM_MODE;
+	int colorMode = INTENSITY_COLOR;
 	//Private functions
 	void updateGlOrtho(GLdouble ratioWidget);
-	void setColor(GLshort classification);
+	void setColor(LaserPoint point);
 	void zoomGlOrtho(GLdouble *percent);
 	void dragGlOrtho(GLdouble increment[]);
 	GLdouble translatePointX(GLdouble x);

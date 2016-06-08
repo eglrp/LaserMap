@@ -15,6 +15,7 @@ OpenGL3D::OpenGL3D(QWidget *parent)
 OpenGL3D::~OpenGL3D()
 {
 	//se llama al cerrar la ventana lasermap y cuando se crea un nuevo 3Dmap
+	qDebug() << "destruyendo ventana 3D";
 }
 
 /////////////////////////////////////////////////////
@@ -47,7 +48,8 @@ void OpenGL3D::paintGL()
 	glLoadIdentity();
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_POINTS);
-	QList<LaserPoint> *pointList = laserPointList->getList();
+	glVertex3d(0, 0,0);
+	/*QList<LaserPoint> *pointList = laserPointList->getList();
 	for (int i = 0; i < pointList->size(); i++)
 	{
 		LaserPoint p = pointList->at(i);
@@ -56,7 +58,7 @@ void OpenGL3D::paintGL()
 		glColor3f(normalizeZ, normalizeZ, normalizeZ);
 		glVertex3d(p.getX(), p.getY(), -(p.getZ()));
 
-	}
+	}*/
 	glEnd();
 }
 
@@ -64,19 +66,7 @@ void OpenGL3D::updateGlOrtho(GLdouble ratioWidget)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	if (laserPointList->getRatioMap() > ratioWidget)
-	{
-		glOrtho(laserPointList->xMin, laserPointList->xMax,
-			laserPointList->yMin - (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap()))) / 2.0, laserPointList->yMax + (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap()))) / 2.0,
-			laserPointList->zMin, laserPointList->zMax);
-
-	}
-	else
-	{
-		glOrtho(laserPointList->xMin - (laserPointList->yLength * (ratioWidget - laserPointList->getRatioMap())) / 2.0, laserPointList->xMax + (laserPointList->yLength * (ratioWidget - laserPointList->getRatioMap())) / 2.0,
-			laserPointList->yMin, laserPointList->yMax,
-			laserPointList->zMin, laserPointList->zMax);
-	}
+	glOrtho(-500, 500, -500, 500, 1000, 1000);
 	glMatrixMode(GL_MODELVIEW);
 }
 

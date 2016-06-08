@@ -21,8 +21,8 @@ public:
 	~LaserMap();
 
 public slots:
-	void createOpenGL2D(LaserPointList *laserPointListIn);
-	void createOpenGL3D(LaserPointList *laserPointListIn);
+	void createOpenGL2D(LaserPointList laserPointListIn);
+	void createOpenGL3D(LaserPointList laserPointListIn);
 	void create3DField(LaserPoint init, LaserPoint end);
 
 private:

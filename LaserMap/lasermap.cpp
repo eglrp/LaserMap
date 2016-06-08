@@ -7,11 +7,13 @@ LaserMap::LaserMap(QWidget *parent)
 	//File loader connections
  	connect(ui.actionOpen, SIGNAL(triggered()),
 		this, SLOT(openFile()));
-	connect(&laserPointListLoader, SIGNAL(loadedLaserPointList(LaserPointList*)),
-		this, SLOT(createOpenGL2D(LaserPointList*)));
-	connect(&fiel3DLoader, SIGNAL(loaded3DList(LaserPointList*)),
-		this, SLOT(createOpenGL3D(LaserPointList*)));
+	qRegisterMetaType<LaserPointList>("LaserPointList");
+	connect(&laserPointListLoader, SIGNAL(loadedLaserPointList(LaserPointList)),
+		this, SLOT(createOpenGL2D(LaserPointList)));
+	connect(&fiel3DLoader, SIGNAL(loaded3DList(LaserPointList)),
+		this, SLOT(createOpenGL3D(LaserPointList)));
 
+	////TEST CODE////
  	laserPointListLoader.setFilename("C:/Users/Italo/Mis archivos/Universidad/1.-TfG/73.las");
  	laserPointListLoader.start();
 }
@@ -41,10 +43,9 @@ void LaserMap::openFile()
 	}
 }
 
-void LaserMap::createOpenGL2D(LaserPointList *laserPointListIn)
+void LaserMap::createOpenGL2D(LaserPointList laserPointListIn)
 {
-
-	laserPointList = *laserPointListIn;
+	laserPointList = laserPointListIn;
 	if (map2D != NULL){
 		disconnect(ui.actionZoom, SIGNAL(triggered()), map2D, SLOT(enableZoom()));
 		disconnect(ui.actionDrag, SIGNAL(triggered()), map2D, SLOT(enableDrag()));
@@ -65,15 +66,16 @@ void LaserMap::createOpenGL2D(LaserPointList *laserPointListIn)
 	connect(map2D, SIGNAL(model3Dselected(LaserPoint, LaserPoint)), this, SLOT(create3DField(LaserPoint, LaserPoint)));
 }
 
-void LaserMap::createOpenGL3D(LaserPointList *laserPointListIn)
+void LaserMap::createOpenGL3D(LaserPointList laserPointListIn)
 {
+	//laserPointListIn.translateToCenter();
 	if (map3D != NULL)
 		delete map3D;
 	if (window3D != NULL)
 		delete window3D;
-	laserPointList3D = *laserPointListIn;
+	//laserPointList3D = laserPointListIn;
 	window3D = new QMainWindow();
-	map3D = new OpenGL3D(window3D, &laserPointList3D);
+	map3D = new OpenGL3D(window3D/*, &laserPointList3D*/);
 	window3D->setCentralWidget(map3D);
 	map3D->update();
 	window3D->show();

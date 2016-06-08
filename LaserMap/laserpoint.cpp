@@ -65,3 +65,8 @@ GLshort LaserPoint::getB()
 {
 	return b;
 }
+
+LaserPoint LaserPoint::generateCopy()
+{
+	return LaserPoint(x, y, z, intensity, classification);
+}

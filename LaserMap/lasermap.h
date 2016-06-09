@@ -27,6 +27,8 @@ public slots:
 
 private:
 	Ui::LaserMapClass ui;
+	QActionGroup* toolActions;
+	QActionGroup* colorActions;
 	LaserPointList laserPointList;
 	LaserPointList laserPointList3D;
 	LaserPointListLoader laserPointListLoader;

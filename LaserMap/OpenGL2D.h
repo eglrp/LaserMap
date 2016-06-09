@@ -34,11 +34,13 @@ signals:
 public slots:
 	void enableDrag();
 	void enableZoom();
+	void enableDistance();
+	void enable3D();
+	void enableArea();
 	void setHeightColor();
 	void setClassColor();
 	void setIntensityColor();
 	void setRealColor();
-	void enable3D();
 
 private:
 	LaserPointList *laserPointList;

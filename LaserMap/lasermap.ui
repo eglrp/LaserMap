@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>534</width>
     <height>500</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>534</width>
      <height>21</height>
     </rect>
    </property>
@@ -60,6 +60,7 @@
    <addaction name="actionHeightColor"/>
    <addaction name="actionRealColor"/>
    <addaction name="actionClassColor"/>
+   <addaction name="actionIntensityColor"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -78,26 +79,41 @@
    </property>
   </action>
   <action name="actionZoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Zoom</string>
    </property>
   </action>
   <action name="actionDrag">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Drag</string>
    </property>
   </action>
   <action name="actionHeightColor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>HeightColor</string>
    </property>
   </action>
   <action name="actionClassColor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>ClassColor</string>
    </property>
   </action>
   <action name="action3D">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>3D</string>
    </property>
@@ -111,8 +127,19 @@
    </property>
   </action>
   <action name="actionDistance">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Distance</string>
+   </property>
+  </action>
+  <action name="actionIntensityColor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>IntensityColor</string>
    </property>
   </action>
  </widget>

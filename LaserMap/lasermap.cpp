@@ -12,13 +12,28 @@ LaserMap::LaserMap(QWidget *parent)
 	connect(&fiel3DLoader, SIGNAL(loaded3DList(LaserPointList*)),
 		this, SLOT(createOpenGL3D(LaserPointList*)));
 
+	toolActions = new QActionGroup(this);
+	toolActions->addAction(ui.action3D);
+	toolActions->addAction(ui.actionDistance);
+	toolActions->addAction(ui.actionDrag);
+	toolActions->addAction(ui.actionZoom);
+	toolActions->setExclusive(true);
+
+	colorActions = new QActionGroup(this);
+	colorActions->addAction(ui.actionClassColor);
+	colorActions->addAction(ui.actionHeightColor);
+	colorActions->addAction(ui.actionRealColor);
+	colorActions->addAction(ui.actionIntensityColor);
+	colorActions->setExclusive(true);
+
  	laserPointListLoader.setFilename("C:/Users/Italo/Mis archivos/Universidad/1.-TfG/73.las");
  	laserPointListLoader.start();
 }
 
 LaserMap::~LaserMap()
 {
-	
+	delete toolActions;
+	delete colorActions;
 	if (map2D != NULL)
 		delete map2D;
 	if (map3D != NULL)
@@ -51,7 +66,10 @@ void LaserMap::createOpenGL2D(LaserPointList *laserPointListIn)
 		disconnect(ui.action3D, SIGNAL(triggered()), map2D, SLOT(enable3D()));
 		disconnect(ui.actionHeightColor, SIGNAL(triggered()), map2D, SLOT(setHeightColor()));
 		disconnect(ui.actionClassColor, SIGNAL(triggered()), map2D, SLOT(setClassColor()));
+		disconnect(ui.actionRealColor, SIGNAL(triggered()), map2D, SLOT(setRealColor()));
+		disconnect(ui.actionIntensityColor, SIGNAL(triggered()), map2D, SLOT(setIntensityColor()));
 		disconnect(map2D, SIGNAL(model3Dselected(LaserPoint, LaserPoint)), this, SLOT(create3DField(LaserPoint, LaserPoint)));
+
 		delete map2D;
 	}
 	map2D = new OpenGL2D(ui.centralWidget, &laserPointList);
@@ -62,6 +80,8 @@ void LaserMap::createOpenGL2D(LaserPointList *laserPointListIn)
 	connect(ui.action3D, SIGNAL(triggered()), map2D, SLOT(enable3D()));
 	connect(ui.actionHeightColor, SIGNAL(triggered()), map2D, SLOT(setHeightColor()));
 	connect(ui.actionClassColor, SIGNAL(triggered()), map2D, SLOT(setClassColor()));
+	connect(ui.actionRealColor, SIGNAL(triggered()), map2D, SLOT(setRealColor()));
+	connect(ui.actionIntensityColor, SIGNAL(triggered()), map2D, SLOT(setIntensityColor()));
 	connect(map2D, SIGNAL(model3Dselected(LaserPoint, LaserPoint)), this, SLOT(create3DField(LaserPoint, LaserPoint)));
 }
 

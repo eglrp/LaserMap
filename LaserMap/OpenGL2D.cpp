@@ -331,6 +331,16 @@ void OpenGL2D::enable3D()
 	mouseMode = FIELD3D_MODE;
 }
 
+void OpenGL2D::enableDistance()
+{
+	mouseMode = DISTANCE_MODE;
+}
+
+void OpenGL2D::enableArea()
+{
+	mouseMode = AREA_MODE;
+}
+
 void OpenGL2D::setClassColor()
 {
 	colorMode = CLASSIFICATION_COLOR;

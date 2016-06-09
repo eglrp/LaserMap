@@ -1,7 +1,7 @@
 #include "LaserPointList.h"
 
 
-LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn, GLdouble yMaxIn, GLdouble zMaxIn, GLdouble zMinIn)
+LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn, GLdouble yMaxIn, GLdouble zMinIn, GLdouble zMaxIn)
 {
 	xMinInit = xMin = xMinIn;
 	xMaxInit = xMax = xMaxIn;
@@ -11,6 +11,7 @@ LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn
 	yLengthInit = yLength = yMax - yMin;
 	zMin = zMinIn;
 	zMax = zMaxIn;
+	zLength = zMax - zMin;
 	ratioMap = xLength / yLength;
 	mapCenter[0] = xMin + xLength / 2.0;
 	mapCenter[1] = yMin + yLength / 2.0;

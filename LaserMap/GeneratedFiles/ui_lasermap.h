@@ -35,6 +35,8 @@ public:
     QAction *actionHeightColor;
     QAction *actionClassColor;
     QAction *action3D;
+    QAction *actionRealColor;
+    QAction *actionDistance;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMenuBar *menuBar;
@@ -64,6 +66,11 @@ public:
         actionClassColor->setObjectName(QStringLiteral("actionClassColor"));
         action3D = new QAction(LaserMapClass);
         action3D->setObjectName(QStringLiteral("action3D"));
+        actionRealColor = new QAction(LaserMapClass);
+        actionRealColor->setObjectName(QStringLiteral("actionRealColor"));
+        actionRealColor->setCheckable(true);
+        actionDistance = new QAction(LaserMapClass);
+        actionDistance->setObjectName(QStringLiteral("actionDistance"));
         centralWidget = new QWidget(LaserMapClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -89,11 +96,17 @@ public:
         menuFile->addAction(actionClose);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
+        mainToolBar->addAction(actionOpen);
+        mainToolBar->addAction(actionClose);
+        mainToolBar->addSeparator();
         mainToolBar->addAction(actionZoom);
         mainToolBar->addAction(actionDrag);
-        mainToolBar->addAction(actionHeightColor);
-        mainToolBar->addAction(actionClassColor);
+        mainToolBar->addAction(actionDistance);
         mainToolBar->addAction(action3D);
+        mainToolBar->addSeparator();
+        mainToolBar->addAction(actionHeightColor);
+        mainToolBar->addAction(actionRealColor);
+        mainToolBar->addAction(actionClassColor);
 
         retranslateUi(LaserMapClass);
 
@@ -111,6 +124,8 @@ public:
         actionHeightColor->setText(QApplication::translate("LaserMapClass", "HeightColor", 0));
         actionClassColor->setText(QApplication::translate("LaserMapClass", "ClassColor", 0));
         action3D->setText(QApplication::translate("LaserMapClass", "3D", 0));
+        actionRealColor->setText(QApplication::translate("LaserMapClass", "RealColor", 0));
+        actionDistance->setText(QApplication::translate("LaserMapClass", "Distance", 0));
         menuFile->setTitle(QApplication::translate("LaserMapClass", "File", 0));
     } // retranslateUi
 

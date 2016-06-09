@@ -49,11 +49,17 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionClose"/>
+   <addaction name="separator"/>
    <addaction name="actionZoom"/>
    <addaction name="actionDrag"/>
-   <addaction name="actionHeightColor"/>
-   <addaction name="actionClassColor"/>
+   <addaction name="actionDistance"/>
    <addaction name="action3D"/>
+   <addaction name="separator"/>
+   <addaction name="actionHeightColor"/>
+   <addaction name="actionRealColor"/>
+   <addaction name="actionClassColor"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -94,6 +100,19 @@
   <action name="action3D">
    <property name="text">
     <string>3D</string>
+   </property>
+  </action>
+  <action name="actionRealColor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>RealColor</string>
+   </property>
+  </action>
+  <action name="actionDistance">
+   <property name="text">
+    <string>Distance</string>
    </property>
   </action>
  </widget>

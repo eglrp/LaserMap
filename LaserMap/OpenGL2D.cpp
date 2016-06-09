@@ -58,6 +58,8 @@ void OpenGL2D::paintGL()
 
 void OpenGL2D::setColor(LaserPoint point)
 {
+	GLdouble tempColor;
+	GLdouble midRange;
 	switch (colorMode)
 	{
 	case REAL_COLOR:
@@ -67,10 +69,68 @@ void OpenGL2D::setColor(LaserPoint point)
 		glColor3f(point.getIntensity(), point.getIntensity(), point.getIntensity());
 		break;
 	case CLASSIFICATION_COLOR:
+		switch (point.getClassification())
+		{
+		case 0:
+			//Not classified
+			glColor3f(1.0, 1.0, 1.0);
+			break;
+		case 1:
+			//Undefined
+			glColor3f(1.0, 1.0, 1.0);
+			break;
+		case 2:
+			//Ground
+			glColor3f(0.549, 0.329, 0.094);
+			break;
+		case 3:
+			//Low vegetation
+			glColor3f(0.698, 0.917, 0.482);
+			break;
+		case 4:
+			//Medium vegetation
+			glColor3f(0.356, 0.819, 0.160);
+			break;
+		case 5:
+			//High vegetation
+			glColor3f(0.203, 0.541, 0.058);
+			break;
+		case 6:
+			//Building
+			glColor3f(0.823, 0.792, 0.117);
+			break;
+		case 7:
+			//Low point (noise)
+			glColor3f(0.780, 0.082, 0.058);
+			break;
+		case 8:
+			//Model Key-point (mass point)
+			glColor3f(0.780, 0.129, 0.909);
+			break;
+		case 9:
+			//Water
+			glColor3f(0.129, 0.372, 0.909);
+			break;
+		default:
+			//Reserved
+			glColor3f(0.129, 0.909, 0.874);
+			break;
+		}
 		break;
 	case HEIGHT_COLOR:
-		GLfloat normalizeZ = (point.getZ() - laserPointList->zMin) / (laserPointList->zMax - laserPointList->zMin);
-		glColor3f(normalizeZ, normalizeZ, normalizeZ);
+		midRange = laserPointList->zLength / 2;
+		tempColor = point.getZ() - laserPointList->zMin;
+		if (tempColor < midRange)
+		{
+			tempColor /= midRange;
+			glColor3f(0.0f, tempColor, 1 - tempColor);
+		}
+		else
+		{
+			tempColor -= midRange;
+			tempColor /= midRange;
+			glColor3f(1 - tempColor, tempColor, 0.0f);
+		}
 		break;
 	}
 }
@@ -273,14 +333,27 @@ void OpenGL2D::enable3D()
 
 void OpenGL2D::setClassColor()
 {
-	int a = 5;
+	colorMode = CLASSIFICATION_COLOR;
+	repaint();
 }
 
 void OpenGL2D::setHeightColor()
 {
-	int a = 5;
+	colorMode = HEIGHT_COLOR;
+	repaint();
 }
 
+void OpenGL2D::setRealColor()
+{
+	colorMode = REAL_COLOR;
+	repaint();
+}
+
+void OpenGL2D::setIntensityColor()
+{
+	colorMode = INTENSITY_COLOR;
+	repaint();
+}
 /////////////////////////////////////////////////////
 //////////////////PRIVATE FUNCTIONS//////////////////
 /////////////////////////////////////////////////////

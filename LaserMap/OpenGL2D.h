@@ -36,13 +36,15 @@ public slots:
 	void enableZoom();
 	void setHeightColor();
 	void setClassColor();
+	void setIntensityColor();
+	void setRealColor();
 	void enable3D();
 
 private:
 	LaserPointList *laserPointList;
 	int initX, initY;
 	int mouseMode = ZOOM_MODE;
-	int colorMode = INTENSITY_COLOR;
+	int colorMode = HEIGHT_COLOR;
 	//Private functions
 	void updateGlOrtho(GLdouble ratioWidget);
 	void setColor(LaserPoint point);

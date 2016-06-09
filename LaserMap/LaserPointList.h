@@ -6,7 +6,7 @@
 class LaserPointList
 {
 public:
-	LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMaxIn, GLdouble yMinIn, GLdouble zMaxIn, GLdouble zMinIn);
+	LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMaxIn, GLdouble yMinIn, GLdouble zMinIn, GLdouble zMaxIn);
 	LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn, GLdouble yMaxIn);
 	LaserPointList();
 	~LaserPointList();
@@ -15,7 +15,7 @@ public:
 	GLdouble getRatioMap();
 	QList<LaserPoint>* getList();
 	void translateToCenter();
-	GLdouble xMin, xMax, xLength, yMin, yMax, yLength, zMin, zMax, percent;
+	GLdouble xMin, xMax, xLength, yMin, yMax, yLength, zMin, zMax, zLength, percent;
 	GLdouble mapCenter[2];
 
 private:

@@ -4,7 +4,6 @@
 #include <QtWidgets/qopenglwidget.h>
 #include <QtOpenGL>
 #include <QList>
-#include <QDebug>
 #include "laserpoint.h"
 #include "OpenGL3D.h"
 #include "LaserPointList.h"
@@ -30,6 +29,7 @@ public:
 
 signals:
 	void model3Dselected(LaserPoint init, LaserPoint end);
+	void mouseMoved(int x, int y);
 
 public slots:
 	void enableDrag();

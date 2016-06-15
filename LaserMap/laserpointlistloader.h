@@ -15,14 +15,15 @@ class LaserPointListLoader : public QThread
 public:
 	LaserPointListLoader();
 	~LaserPointListLoader();
-	void setFilename(QString filenameIn);
 	virtual void run();
+	void setWorkspace(QString filename, LaserPointList* laserPointListIn);
 
 signals:
-	void loadingLaserPointList();
-	void loadedLaserPointList(LaserPointList *laserPointList);
+	void loadingLaserPointList(QString message, int barPercent);
+	void loadedLaserPointList();
 
 private:
+	LaserPointList* laserPointList;
 	QString filename;
 
 };

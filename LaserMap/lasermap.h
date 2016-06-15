@@ -21,8 +21,8 @@ public:
 	~LaserMap();
 
 public slots:
-	void createOpenGL2D(LaserPointList *laserPointListIn);
-	void createOpenGL3D(LaserPointList *laserPointListIn);
+	void createOpenGL2D();
+	void createOpenGL3D();
 	void create3DField(LaserPoint init, LaserPoint end);
 
 private:
@@ -36,9 +36,16 @@ private:
 	OpenGL2D * map2D = NULL;
 	QMainWindow * window3D = NULL;
 	OpenGL3D * map3D = NULL;
+	QLabel* localizationLabel;
+	QLabel* statusLabel;
+	QProgressBar* progressBar = NULL;
 
 private slots:
 	void openFile();
+	void closeFile();
+	void writeLocalization(int x, int y);
+	void writeMessage(QString message);
+	void writeMessageBar(QString message, int barPercent);
 };
 
 #endif // LASERMAP_H

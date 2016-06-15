@@ -10,6 +10,7 @@ OpenGL2D::OpenGL2D(QWidget *parent, LaserPointList *laserPointListIn)
 	: QOpenGLWidget(parent)
 {
 	laserPointList = laserPointListIn;
+	setMouseTracking(true);
 }
 
 OpenGL2D::~OpenGL2D()
@@ -66,7 +67,8 @@ void OpenGL2D::setColor(LaserPoint point)
 		glColor3f(point.getR(), point.getG(), point.getB());
 		break;
 	case INTENSITY_COLOR:
-		glColor3f(point.getIntensity(), point.getIntensity(), point.getIntensity());
+		tempColor = (point.getIntensity() - laserPointList->intensityMin) / (GLdouble)laserPointList->intensityLength;
+		glColor3f(0.0, 1-tempColor, tempColor);
 		break;
 	case CLASSIFICATION_COLOR:
 		switch (point.getClassification())
@@ -129,7 +131,7 @@ void OpenGL2D::setColor(LaserPoint point)
 		{
 			tempColor -= midRange;
 			tempColor /= midRange;
-			glColor3f(1 - tempColor, tempColor, 0.0f);
+			glColor3f(tempColor, 1 - tempColor, 0.0f);
 		}
 		break;
 	}
@@ -212,6 +214,7 @@ void OpenGL2D::mousePressEvent(QMouseEvent *event)
 
 void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 {
+	emit mouseMoved(translatePointX(event->x()), translatePointX(event->y()));
 	switch (mouseMode)
 	{
 	case ZOOM_MODE:
@@ -233,7 +236,6 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 			//Update init
 			initX = event->x();
 			initY = event->y();
-			qDebug() << "repintando...";
 			resizeGL(width(), height());
 			repaint();
 		}
@@ -275,7 +277,6 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			//Adjust zoom and moove GlOrtho
 			zoomGlOrtho(&percent);
 			dragGlOrtho(increment);
-			qDebug() << "repintando..";
 			repaint();
 		}
 		else if (event->button() == Qt::RightButton && mouseMode == ZOOM_MODE)
@@ -309,6 +310,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 	default:
 		break;
 	}
+	emit mouseMoved(translatePointX(event->x()), translatePointX(event->y()));
 
 }
 

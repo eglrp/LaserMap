@@ -49,8 +49,8 @@ public:
     {
         if (LaserMapClass->objectName().isEmpty())
             LaserMapClass->setObjectName(QStringLiteral("LaserMapClass"));
-        LaserMapClass->resize(534, 500);
-        LaserMapClass->setMinimumSize(QSize(100, 100));
+        LaserMapClass->resize(630, 630);
+        LaserMapClass->setMinimumSize(QSize(630, 630));
         actionOpen = new QAction(LaserMapClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionClose = new QAction(LaserMapClass);
@@ -90,7 +90,7 @@ public:
         LaserMapClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LaserMapClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 534, 21));
+        menuBar->setGeometry(QRect(0, 0, 630, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         LaserMapClass->setMenuBar(menuBar);

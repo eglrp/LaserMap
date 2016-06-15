@@ -16,6 +16,7 @@ public:
 	QList<LaserPoint>* getList();
 	void translateToCenter();
 	GLdouble xMin, xMax, xLength, yMin, yMax, yLength, zMin, zMax, zLength, percent;
+	int intensityMin, intensityMax, intensityLength;
 	GLdouble mapCenter[2];
 
 private:

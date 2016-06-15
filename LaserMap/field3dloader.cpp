@@ -38,11 +38,14 @@ void Field3DLoader::run()
 		yMin = init.getY();
 	}
 	QList<LaserPoint> *pointList = laserPointList->getList();
-	LaserPointList *laserPointList3D = new LaserPointList(xMin, xMax, yMin, yMax);
+	*laserPointList3D = LaserPointList(xMin, xMax, yMin, yMax);
 
 	laserPointList3D->zMax = laserPointList->zMin;
 	laserPointList3D->zMin = laserPointList->zMax;
-	for (int i = 0; i < pointList->size(); i++)
+
+	int percent = 0;
+	int numPoints = pointList->size();
+	for (int i = 0; i < numPoints; i++)
 	{
 		LaserPoint p = pointList->at(i);
 		if (p.getX() > xMin &&
@@ -58,15 +61,31 @@ void Field3DLoader::run()
 			else if (p.getZ() < laserPointList3D->zMin)
 				laserPointList3D->zMin = p.getZ();
 		}
-		
+
+		//percent for loadBar
+		int newPercent = (i / (float)numPoints) * 100;
+		if (newPercent > (percent + 2))
+		{
+			percent = newPercent;
+			emit loading3DList(" Leyendo fichero LAS...", percent);
+		}
 	}
-	emit loaded3DList(laserPointList3D);
+	laserPointList3D->intensityMin = laserPointList->intensityMin;
+	laserPointList3D->intensityMax = laserPointList->intensityMax;
+	laserPointList3D->intensityLength = laserPointList->intensityLength;
+
+	emit loading3DList(" Moviendo puntos al centro...", 100);
+	laserPointList3D->zLength = laserPointList3D->zMax - laserPointList3D->zMin;
+	laserPointList3D->translateToCenter();
+
+	emit loaded3DList();
 }
 
 
-void Field3DLoader::setWorkspace(LaserPoint initIn, LaserPoint endIn, LaserPointList* laserPointListIn)
+void Field3DLoader::setWorkspace(LaserPoint initIn, LaserPoint endIn, LaserPointList* laserPointListIn, LaserPointList* laserPointList3DIn)
 {
 	init = initIn;
 	end = endIn;
 	laserPointList = laserPointListIn;
+	laserPointList3D = laserPointList3DIn;
 }

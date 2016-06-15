@@ -72,7 +72,7 @@ GLdouble LaserPointList::getRatioMap()
 
 void LaserPointList::translateToCenter()
 {
-	/*GLdouble xTranslation = (xMaxInit + xMinInit) / 2;
+	GLdouble xTranslation = (xMaxInit + xMinInit) / 2;
 	GLdouble yTranslation = (yMaxInit + yMinInit) / 2;
 	GLdouble zTranslation = (zMax + zMin) / 2;
 
@@ -87,8 +87,8 @@ void LaserPointList::translateToCenter()
 	for (int i = 0; i < pointList.size(); i++)
 	{
 		LaserPoint p = pointList.at(i);
-		newList.append(LaserPoint(p.getX() - xTranslation, p.getY() - yTranslation, p.getZ() - zTranslation, p.getIntensity(), p.getClassification()));
+		newList.append(LaserPoint(p.getX() - xTranslation, p.getY() - yTranslation, p.getZ() - zTranslation, p.getIntensity(), p.getClassification(), p.getR(), p.getG(), p.getB()));
 	}
 	pointList = newList;
-	resetData();*/
+	resetData();
 }

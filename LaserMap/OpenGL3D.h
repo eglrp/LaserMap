@@ -31,6 +31,7 @@ public slots:
 private:
 	GLdouble xRotation = 315;
 	GLdouble yRotation = 0;
+	GLdouble fovy = 90.0;
 	GLdouble frustumRange;
 	LaserPointList *laserPointList;
 	int colorMode;
@@ -45,6 +46,7 @@ private:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	void wheelEvent(QWheelEvent *event);
 };
 
 #endif

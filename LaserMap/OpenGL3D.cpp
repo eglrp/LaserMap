@@ -76,7 +76,7 @@ void OpenGL3D::updateGlOrtho(GLdouble ratioWidget)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0, ratioWidget, 0.0, frustumRange * 2);
+	gluPerspective(fovy, ratioWidget, 0.0, frustumRange * 2);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -173,7 +173,7 @@ void OpenGL3D::setFrustrumRange()
 		frustumRange = abs(laserPointList->zMin);
 	if (frustumRange < abs(laserPointList->zMax))
 		frustumRange = abs(laserPointList->zMax);
-	frustumRange += frustumRange / 8;
+	frustumRange += frustumRange / 6;
 }
 
 /////////////////////////////////////////////////////
@@ -205,6 +205,15 @@ void OpenGL3D::mouseReleaseEvent(QMouseEvent *event)
 {
 
 }
+
+void OpenGL3D::wheelEvent(QWheelEvent *event)
+{
+	fovy -= (GLdouble)event->delta()/16.0;
+	if (fovy < 10) fovy = 10;
+	if (fovy > 180) fovy = 180;
+	repaint();
+}
+
 
 /////////////////////////////////////////////////////
 ////////////////////////SLOTS////////////////////////

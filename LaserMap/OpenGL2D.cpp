@@ -146,6 +146,7 @@ void OpenGL2D::zoomGlOrtho(GLdouble *percent)
 	laserPointList->yLength = laserPointList->yMax - laserPointList->yMin;
 	laserPointList->xLength = laserPointList->xMax - laserPointList->xMin;
 	laserPointList->percent *= (1 - (*percent));
+	laserPointList->checkZoom();
 }
 
 void OpenGL2D::updateGlOrtho(GLdouble ratioWidget)
@@ -281,7 +282,9 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 		}
 		else if (event->button() == Qt::RightButton && mouseMode == ZOOM_MODE)
 		{
-			laserPointList->resetData();
+			GLdouble percent = -0.5f;
+			zoomGlOrtho(&percent);
+			//laserPointList->resetData();
 			repaint();
 		}
 		break;

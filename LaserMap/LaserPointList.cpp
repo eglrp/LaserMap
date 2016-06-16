@@ -92,3 +92,9 @@ void LaserPointList::translateToCenter()
 	pointList = newList;
 	resetData();
 }
+
+void LaserPointList::checkZoom()
+{
+	if (percent > 1.0)
+		resetData();
+}

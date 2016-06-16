@@ -7,6 +7,7 @@ LaserMap::LaserMap(QWidget *parent)
 	//File loader connections
  	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
 	connect(ui.actionClose, SIGNAL(triggered()), this, SLOT(closeFile()));
+	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(&laserPointListLoader, SIGNAL(loadedLaserPointList()), this, SLOT(createOpenGL2D()));
 	connect(&laserPointListLoader, SIGNAL(loadingLaserPointList(QString, int)), this, SLOT(writeMessageBar(QString, int)));
 	connect(&fiel3DLoader, SIGNAL(loaded3DList()), this, SLOT(createOpenGL3D()));

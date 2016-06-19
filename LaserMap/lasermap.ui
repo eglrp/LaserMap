@@ -64,11 +64,22 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/open.png</normaloff>:/LaserMap/open.png</iconset>
+   </property>
    <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="toolTip">
     <string>Open</string>
    </property>
   </action>
   <action name="actionClose">
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/close.png</normaloff>:/LaserMap/close.png</iconset>
+   </property>
    <property name="text">
     <string>Close</string>
    </property>
@@ -82,6 +93,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/zoom.png</normaloff>:/LaserMap/zoom.png</iconset>
+   </property>
    <property name="text">
     <string>Zoom</string>
    </property>
@@ -89,6 +104,10 @@
   <action name="actionDrag">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/drag.png</normaloff>:/LaserMap/drag.png</iconset>
    </property>
    <property name="text">
     <string>Drag</string>
@@ -98,6 +117,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/heightColor.png</normaloff>:/LaserMap/heightColor.png</iconset>
+   </property>
    <property name="text">
     <string>HeightColor</string>
    </property>
@@ -105,6 +128,10 @@
   <action name="actionClassColor">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/classColor.png</normaloff>:/LaserMap/classColor.png</iconset>
    </property>
    <property name="text">
     <string>ClassColor</string>
@@ -114,6 +141,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/3D.png</normaloff>:/LaserMap/3D.png</iconset>
+   </property>
    <property name="text">
     <string>3D</string>
    </property>
@@ -121,6 +152,10 @@
   <action name="actionRealColor">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/realColor.png</normaloff>:/LaserMap/realColor.png</iconset>
    </property>
    <property name="text">
     <string>RealColor</string>
@@ -130,6 +165,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/distance.png</normaloff>:/LaserMap/distance.png</iconset>
+   </property>
    <property name="text">
     <string>Distance</string>
    </property>
@@ -137,6 +176,10 @@
   <action name="actionIntensityColor">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="lasermap.qrc">
+     <normaloff>:/LaserMap/intensityColor.png</normaloff>:/LaserMap/intensityColor.png</iconset>
    </property>
    <property name="text">
     <string>IntensityColor</string>

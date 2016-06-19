@@ -5,6 +5,7 @@ LaserMap::LaserMap(QWidget *parent)
 {
 	ui.setupUi(this);
 	//File loader connections
+	
  	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
 	connect(ui.actionClose, SIGNAL(triggered()), this, SLOT(closeFile()));
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));

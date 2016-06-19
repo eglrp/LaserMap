@@ -1,4 +1,15 @@
 <RCC>
-    <qresource prefix="LaserMap">
+    <qresource prefix="/LaserMap">
+        <file>3D.png</file>
+        <file>classColor.png</file>
+        <file>close.png</file>
+        <file>distance.png</file>
+        <file>drag.png</file>
+        <file>heightColor.png</file>
+        <file>intensityColor.png</file>
+        <file>open.png</file>
+        <file>realColor.png</file>
+        <file>zoom.png</file>
+        <file>appIcon.png</file>
     </qresource>
 </RCC>

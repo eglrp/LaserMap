@@ -44,14 +44,14 @@ public slots:
 
 private:
 	LaserPointList *laserPointList;
-	int initX, initY;
+	int initX, initY, endX ,endY;
 	int mouseMode = ZOOM_MODE;
 	int colorMode = HEIGHT_COLOR;
 	GLuint buffer;
 	GLuint renderedTexture;
 	GLuint renderedDepth;
-	bool isRubberBand;
 	QRubberBand *rubberBand;
+	bool isLineDistance;
 	bool updateFramebuffer;
 	//Private functions
 	void updateGlOrtho(GLdouble ratioWidget);

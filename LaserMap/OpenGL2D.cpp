@@ -11,8 +11,8 @@ OpenGL2D::OpenGL2D(QWidget *parent, LaserPointList *laserPointListIn)
 {
 	laserPointList = laserPointListIn;
 	setMouseTracking(true);
-	isRubberBand = false;
 	rubberBand = NULL;
+	isLineDistance = false;
 }
 
 OpenGL2D::~OpenGL2D()
@@ -81,11 +81,6 @@ void OpenGL2D::paintGL()
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		updateFramebuffer = false;
 	}
-	if (isRubberBand)
-	{
-		QPainter painter(this);
-
-	}
 	glViewport(0, 0, width(), height());
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -108,6 +103,21 @@ void OpenGL2D::paintGL()
 	glVertex3f(-1.0, 1.0, -1.0);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
+	if (isLineDistance)
+	{
+		glBegin(GL_LINES);
+		glColor3f(1.0, 1.0, 1.0);
+		//init
+		GLdouble xCoord = (initX / (GLfloat)width()) * 2 - 1;
+		GLdouble yCoord = (initY / (GLfloat)width()) * 2 - 1;
+		glVertex3d(xCoord, -yCoord, -0.5f);
+		//end
+		xCoord = (endX / (GLfloat)width()) * 2 - 1;
+		yCoord = (endY / (GLfloat)width()) * 2 - 1;
+		glVertex3d(xCoord, -yCoord, -0.5f);
+		glEnd();
+
+	}
 	glDisable(GL_TEXTURE_2D);
 	glFlush();
 }
@@ -247,8 +257,9 @@ void OpenGL2D::mousePressEvent(QMouseEvent *event)
 		{
 			initX = event->x();
 			initY = event->y();
-			isRubberBand = true;
 			rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+			rubberBand->setGeometry(QRect(event->pos(), event->pos()).normalized());
+			rubberBand->setVisible(true);
 		}
 		break;
 	case DRAG_MODE:
@@ -263,19 +274,17 @@ void OpenGL2D::mousePressEvent(QMouseEvent *event)
 		{
 			initX = event->x();
 			initY = event->y();
-			isRubberBand = true;
 			rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
 			rubberBand->setGeometry(QRect(event->pos(), event->pos()).normalized());
+			rubberBand->setVisible(true);
 		}
 		break;
 	case DISTANCE_MODE:
 		if (event->button() == Qt::LeftButton)
 		{
-			initX = event->x();
-			initY = event->y();
-			isRubberBand = true;
-			rubberBand = new QRubberBand(QRubberBand::Line, this);
-			rubberBand->setGeometry(QRect(event->pos(), event->pos()).normalized());
+			initX = endX = event->x();
+			initY = endY = event->y();
+			isLineDistance = true;
 		}
 		break;
 	default:
@@ -292,7 +301,6 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
 			rubberBand->setGeometry(QRect(QPoint(initX,initY), event->pos()).normalized());
-			repaint();
 		}
 		break;
 	case DRAG_MODE:
@@ -314,13 +322,13 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
 			rubberBand->setGeometry(QRect(QPoint(initX, initY), event->pos()).normalized());
-			repaint();
 		}
 		break;
 	case DISTANCE_MODE:
 		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
-			rubberBand->setGeometry(QRect(QPoint(initX, initY), event->pos()).normalized());
+			endX = event->x();
+			endY = event->y();
 			repaint();
 		}
 		break;
@@ -353,7 +361,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			//Adjust zoom and moove GlOrtho
 			zoomGlOrtho(&percent);
 			dragGlOrtho(increment);
-			isRubberBand = false;
+			rubberBand->setVisible(false);
 			delete rubberBand;
 			rubberBand = NULL;
 			updateFramebuffer = true;
@@ -387,7 +395,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 		{
 			LaserPoint init = LaserPoint(translatePointX(initX), translatePointY(initY));
 			LaserPoint end = LaserPoint(translatePointX(event->x()), translatePointY(event->y()));
-			isRubberBand = false;
+			rubberBand->setVisible(false);
 			delete rubberBand;
 			rubberBand = NULL;
 			emit model3Dselected(init, end);
@@ -401,9 +409,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			GLdouble distance = calculateDistance(init, end);
 			QString message(" Distancia: ");
 			message += QString::number(distance);
-			isRubberBand = false;
-			delete rubberBand;
-			rubberBand = NULL;
+			isLineDistance = false;
 			emit postMessage(message);
 		}
 		break;

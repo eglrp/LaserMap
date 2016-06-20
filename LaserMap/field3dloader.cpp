@@ -74,7 +74,7 @@ void Field3DLoader::run()
 	laserPointList3D->intensityMax = laserPointList->intensityMax;
 	laserPointList3D->intensityLength = laserPointList->intensityLength;
 
-	emit loading3DList(" Moviendo puntos al centro...", 100);
+	emit loading3DList(" Trasladando puntos al centro...", 100);
 	laserPointList3D->zLength = laserPointList3D->zMax - laserPointList3D->zMin;
 	laserPointList3D->translateToCenter();
 

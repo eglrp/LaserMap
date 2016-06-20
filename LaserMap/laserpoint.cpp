@@ -69,3 +69,25 @@ GLdouble LaserPoint::getB()
 {
 	return b;
 }
+
+int LaserPoint::compareTo(LaserPoint point)
+{
+	if (x < point.getX())
+		return -1;
+	else if (x > point.getX())
+		return 1;
+	else
+	{
+		if (y < point.getY())
+			return -1;
+		else if (y > point.getY())
+			return 1;
+		else
+		{
+			if (z < point.getZ())
+				return -1;
+			else
+				return 1;
+		}
+	}
+}

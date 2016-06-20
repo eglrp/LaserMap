@@ -4,14 +4,14 @@
 #include <QtWidgets/qopenglwidget.h>
 #include <QtOpenGL>
 #include <QList>
+#include <math.h>
 #include "laserpoint.h"
 #include "OpenGL3D.h"
 #include "LaserPointList.h"
 #define DRAG_MODE 0
 #define ZOOM_MODE 1
 #define DISTANCE_MODE 2
-#define AREA_MODE 3
-#define FIELD3D_MODE 4
+#define FIELD3D_MODE 3
 
 #define REAL_COLOR 0
 #define INTENSITY_COLOR 1
@@ -30,13 +30,13 @@ public:
 signals:
 	void model3Dselected(LaserPoint init, LaserPoint end);
 	void mouseMoved(int x, int y);
+	void postMessage(QString message);
 
 public slots:
 	void enableDrag();
 	void enableZoom();
 	void enableDistance();
 	void enable3D();
-	void enableArea();
 	void setHeightColor();
 	void setClassColor();
 	void setIntensityColor();
@@ -62,6 +62,7 @@ private:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	GLdouble calculateDistance(LaserPoint init, LaserPoint end);
 };
 
 

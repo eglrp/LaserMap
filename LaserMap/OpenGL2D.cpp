@@ -208,6 +208,13 @@ void OpenGL2D::mousePressEvent(QMouseEvent *event)
 			initY = event->y();
 		}
 		break;
+	case DISTANCE_MODE:
+		if (event->button() == Qt::LeftButton)
+		{
+			initX = event->x();
+			initY = event->y();
+		}
+		break;
 	default:
 		break;
 	}
@@ -248,6 +255,8 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 			//pintar recuadro
 			repaint();
 		}
+		break;
+	case DISTANCE_MODE:
 		break;
 	default:
 		break;
@@ -310,6 +319,17 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			emit model3Dselected(init, end);
 		}
 		break;
+	case DISTANCE_MODE:
+		if (event->button() == Qt::LeftButton)
+		{
+			LaserPoint init = LaserPoint(translatePointX(initX), translatePointY(initY));
+			LaserPoint end = LaserPoint(translatePointX(event->x()), translatePointY(event->y()));
+			GLdouble distance = calculateDistance(init, end);
+			QString message(" Distancia: ");
+			message += QString::number(distance);
+			emit postMessage(message);
+		}
+		break;
 	default:
 		break;
 	}
@@ -324,26 +344,25 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 void OpenGL2D::enableDrag()
 {
 	mouseMode = DRAG_MODE;
+	emit postMessage("");
 }
 
 void OpenGL2D::enableZoom()
 {
 	mouseMode = ZOOM_MODE;
+	emit postMessage("");
 }
 
 void OpenGL2D::enable3D()
 {
 	mouseMode = FIELD3D_MODE;
+	emit postMessage("");
 }
 
 void OpenGL2D::enableDistance()
 {
 	mouseMode = DISTANCE_MODE;
-}
-
-void OpenGL2D::enableArea()
-{
-	mouseMode = AREA_MODE;
+	emit postMessage("");
 }
 
 void OpenGL2D::setClassColor()
@@ -369,6 +388,7 @@ void OpenGL2D::setIntensityColor()
 	colorMode = INTENSITY_COLOR;
 	repaint();
 }
+
 /////////////////////////////////////////////////////
 //////////////////PRIVATE FUNCTIONS//////////////////
 /////////////////////////////////////////////////////
@@ -403,4 +423,32 @@ GLdouble OpenGL2D::translatePointY(GLdouble y)
 			(laserPointList->yLength + (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap())))) * (1 - y / (GLdouble)height());
 	}
 	return point;
+}
+
+GLdouble OpenGL2D::calculateDistance(LaserPoint init, LaserPoint end)
+{
+	QList<LaserPoint>* pointList = laserPointList->getList();
+	int listSize = pointList->size();
+	GLdouble initZ = 0;
+	for (int i = 0; i < listSize; i++)
+	{
+		LaserPoint p = pointList->at(i);
+		if (abs(p.getX() - init.getX()) < 5 && abs(p.getY() - init.getY()) < 5)
+		{
+			initZ = p.getZ();
+			break;
+		}
+	}
+	GLdouble endZ = 0;
+	for (int i = 0; i < listSize; i++)
+	{
+		LaserPoint p = pointList->at(i);
+		if (abs(p.getX() - end.getX()) < 10 && abs(p.getY() - end.getY()) < 10)
+		{
+			endZ = p.getZ();
+			break;
+		}
+	}
+	qDebug() << "initZ: " << initZ << "; endZ: " << endZ;
+	return sqrt(pow((init.getX() - end.getX()), 2.0) + pow((init.getY() - end.getY()), 2.0) + pow(initZ - endZ, 2.0));
 }

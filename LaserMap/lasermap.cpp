@@ -94,17 +94,21 @@ void LaserMap::closeFile()
 
 void LaserMap::createOpenGL2D()
 {
-	writeMessageBar(" Fichero cargado.", 100);
+	writeMessageBar("", 100);
 	map2D = new OpenGL2D(ui.centralWidget, &laserPointList);
 	ui.gridLayout->addWidget(map2D);
 	map2D->update();
 	connect(ui.actionZoom, SIGNAL(triggered()), map2D, SLOT(enableZoom()));
 	connect(ui.actionDrag, SIGNAL(triggered()), map2D, SLOT(enableDrag()));
 	connect(ui.action3D, SIGNAL(triggered()), map2D, SLOT(enable3D()));
+	connect(ui.actionDistance, SIGNAL(triggered()), map2D, SLOT(enableDistance()));
+
 	connect(ui.actionHeightColor, SIGNAL(triggered()), map2D, SLOT(setHeightColor()));
 	connect(ui.actionClassColor, SIGNAL(triggered()), map2D, SLOT(setClassColor()));
 	connect(ui.actionRealColor, SIGNAL(triggered()), map2D, SLOT(setRealColor()));
 	connect(ui.actionIntensityColor, SIGNAL(triggered()), map2D, SLOT(setIntensityColor()));
+
+	connect(map2D, SIGNAL(postMessage(QString)), this, SLOT(writeMessage(QString)));
 	connect(map2D, SIGNAL(model3Dselected(LaserPoint, LaserPoint)), this, SLOT(create3DField(LaserPoint, LaserPoint)));
 	connect(map2D, SIGNAL(mouseMoved(int, int)), this, SLOT(writeLocalization(int, int)));
 
@@ -114,7 +118,7 @@ void LaserMap::createOpenGL2D()
 
 void LaserMap::createOpenGL3D()
 {
-	writeMessageBar(" 3D cargado.", 100);
+	writeMessageBar("", 100);
 	if (map3D != NULL)
 		delete map3D;
 	if (window3D != NULL)

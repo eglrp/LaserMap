@@ -11,10 +11,14 @@ OpenGL2D::OpenGL2D(QWidget *parent, LaserPointList *laserPointListIn)
 {
 	laserPointList = laserPointListIn;
 	setMouseTracking(true);
+	isRubberBand = false;
+	rubberBand = NULL;
 }
 
 OpenGL2D::~OpenGL2D()
 {
+	if (rubberBand != NULL)
+		delete rubberBand;
 }
 
 /////////////////////////////////////////////////////
@@ -26,6 +30,22 @@ void OpenGL2D::initializeGL()
 	initializeOpenGLFunctions();
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_DEPTH_TEST);
+	//create and configure framebuffer
+	glGenFramebuffers(1, &buffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, buffer);
+	glGenTextures(1, &renderedTexture);
+	glBindTexture(GL_TEXTURE_2D, renderedTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2048, 1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glGenRenderbuffers(1, &renderedDepth);
+	glBindRenderbuffer(GL_RENDERBUFFER, renderedDepth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 2048, 1024);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderedDepth);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderedTexture, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	updateFramebuffer = true;
+	//reset matrix
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
@@ -34,27 +54,62 @@ void OpenGL2D::initializeGL()
 
 void OpenGL2D::resizeGL(int w, int h)
 {
-	//GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
-	//updateGlOrtho(ratioWidget);
-	glViewport(0, 0, w, h);
+	updateFramebuffer = true;
 }
 
 void OpenGL2D::paintGL()
 {
-	updateGlOrtho(width()/(GLdouble)height());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-	glColor3f(1.0, 1.0, 1.0);
-	glBegin(GL_POINTS);
-	QList<LaserPoint> *pointList = laserPointList->getList();
-	for (int i = 0; i < pointList->size(); i++)
+	if (updateFramebuffer)
 	{
-		LaserPoint p = pointList->at(i);
-		setColor(p);
-		glVertex3d(p.getX(), p.getY(), -(p.getZ()));
+		glBindFramebuffer(GL_FRAMEBUFFER, buffer);
+		glViewport(0, 0, 2048, 1024);
+
+		updateGlOrtho(width() / (GLdouble)height());
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glLoadIdentity();
+		glColor3f(1.0, 1.0, 1.0);
+		glBegin(GL_POINTS);
+		QList<LaserPoint> *pointList = laserPointList->getList();
+		for (int i = 0; i < pointList->size(); i++)
+		{
+			LaserPoint p = pointList->at(i);
+			setColor(p);
+			glVertex3d(p.getX(), p.getY(), -(p.getZ()));
+
+		}
+		glEnd();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		updateFramebuffer = false;
+	}
+	if (isRubberBand)
+	{
+		QPainter painter(this);
 
 	}
+	glViewport(0, 0, width(), height());
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-1.0, 1.0, -1.0, 1.0, -2.0, 2.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, renderedTexture);
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_QUADS);
+	glTexCoord2d(0.0f, 0.0f);
+	glVertex3f(-1.0, -1.0, -1.0);
+	glTexCoord2d(1.0f, 0.0f);
+	glVertex3f(1.0, -1.0, -1);
+	glTexCoord2d(1.0f, 1.0f);
+	glVertex3f(1.0, 1.0, -1.0);
+	glTexCoord2d(0.0f, 1.0f);
+	glVertex3f(-1.0, 1.0, -1.0);
 	glEnd();
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
+	glFlush();
 }
 
 void OpenGL2D::setColor(LaserPoint point)
@@ -192,6 +247,8 @@ void OpenGL2D::mousePressEvent(QMouseEvent *event)
 		{
 			initX = event->x();
 			initY = event->y();
+			isRubberBand = true;
+			rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
 		}
 		break;
 	case DRAG_MODE:
@@ -206,6 +263,9 @@ void OpenGL2D::mousePressEvent(QMouseEvent *event)
 		{
 			initX = event->x();
 			initY = event->y();
+			isRubberBand = true;
+			rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+			rubberBand->setGeometry(QRect(event->pos(), event->pos()).normalized());
 		}
 		break;
 	case DISTANCE_MODE:
@@ -213,6 +273,9 @@ void OpenGL2D::mousePressEvent(QMouseEvent *event)
 		{
 			initX = event->x();
 			initY = event->y();
+			isRubberBand = true;
+			rubberBand = new QRubberBand(QRubberBand::Line, this);
+			rubberBand->setGeometry(QRect(event->pos(), event->pos()).normalized());
 		}
 		break;
 	default:
@@ -228,8 +291,7 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 	case ZOOM_MODE:
 		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
-			int a = 5;
-			//pintar recuadro
+			rubberBand->setGeometry(QRect(QPoint(initX,initY), event->pos()).normalized());
 			repaint();
 		}
 		break;
@@ -244,19 +306,23 @@ void OpenGL2D::mouseMoveEvent(QMouseEvent *event)
 			//Update init
 			initX = event->x();
 			initY = event->y();
-			resizeGL(width(), height());
+			updateFramebuffer = true;
 			repaint();
 		}
 		break;
 	case FIELD3D_MODE:
 		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
 		{
-			int a = 5;
-			//pintar recuadro
+			rubberBand->setGeometry(QRect(QPoint(initX, initY), event->pos()).normalized());
 			repaint();
 		}
 		break;
 	case DISTANCE_MODE:
+		if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
+		{
+			rubberBand->setGeometry(QRect(QPoint(initX, initY), event->pos()).normalized());
+			repaint();
+		}
 		break;
 	default:
 		break;
@@ -287,13 +353,17 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			//Adjust zoom and moove GlOrtho
 			zoomGlOrtho(&percent);
 			dragGlOrtho(increment);
+			isRubberBand = false;
+			delete rubberBand;
+			rubberBand = NULL;
+			updateFramebuffer = true;
 			repaint();
 		}
 		else if (event->button() == Qt::RightButton && mouseMode == ZOOM_MODE)
 		{
 			GLdouble percent = -0.5f;
 			zoomGlOrtho(&percent);
-			//laserPointList->resetData();
+			updateFramebuffer = true;
 			repaint();
 		}
 		break;
@@ -308,6 +378,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			//Update init
 			initX = event->x();
 			initY = event->y();
+			updateFramebuffer = true;
 			repaint();
 		}
 		break;
@@ -316,6 +387,9 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 		{
 			LaserPoint init = LaserPoint(translatePointX(initX), translatePointY(initY));
 			LaserPoint end = LaserPoint(translatePointX(event->x()), translatePointY(event->y()));
+			isRubberBand = false;
+			delete rubberBand;
+			rubberBand = NULL;
 			emit model3Dselected(init, end);
 		}
 		break;
@@ -327,6 +401,9 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			GLdouble distance = calculateDistance(init, end);
 			QString message(" Distancia: ");
 			message += QString::number(distance);
+			isRubberBand = false;
+			delete rubberBand;
+			rubberBand = NULL;
 			emit postMessage(message);
 		}
 		break;
@@ -368,24 +445,28 @@ void OpenGL2D::enableDistance()
 void OpenGL2D::setClassColor()
 {
 	colorMode = CLASSIFICATION_COLOR;
+	updateFramebuffer = true;
 	repaint();
 }
 
 void OpenGL2D::setHeightColor()
 {
 	colorMode = HEIGHT_COLOR;
+	updateFramebuffer = true;
 	repaint();
 }
 
 void OpenGL2D::setRealColor()
 {
 	colorMode = REAL_COLOR;
+	updateFramebuffer = true;
 	repaint();
 }
 
 void OpenGL2D::setIntensityColor()
 {
 	colorMode = INTENSITY_COLOR;
+	updateFramebuffer = true;
 	repaint();
 }
 

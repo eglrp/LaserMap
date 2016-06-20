@@ -47,6 +47,12 @@ private:
 	int initX, initY;
 	int mouseMode = ZOOM_MODE;
 	int colorMode = HEIGHT_COLOR;
+	GLuint buffer;
+	GLuint renderedTexture;
+	GLuint renderedDepth;
+	bool isRubberBand;
+	QRubberBand *rubberBand;
+	bool updateFramebuffer;
 	//Private functions
 	void updateGlOrtho(GLdouble ratioWidget);
 	void setColor(LaserPoint point);

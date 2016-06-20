@@ -84,7 +84,7 @@ void OpenGL2D::paintGL()
 	glViewport(0, 0, width(), height());
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-1.0, 1.0, -1.0, 1.0, -2.0, 2.0);
+	glOrtho(0.0, width(), 0.0, height(), 0.0, 3.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -94,13 +94,13 @@ void OpenGL2D::paintGL()
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_QUADS);
 	glTexCoord2d(0.0f, 0.0f);
-	glVertex3f(-1.0, -1.0, -1.0);
+	glVertex3i(0, 0, -2);
 	glTexCoord2d(1.0f, 0.0f);
-	glVertex3f(1.0, -1.0, -1);
+	glVertex3i(width(), 0.0, -2);
 	glTexCoord2d(1.0f, 1.0f);
-	glVertex3f(1.0, 1.0, -1.0);
+	glVertex3i(width(), height(), -2);
 	glTexCoord2d(0.0f, 1.0f);
-	glVertex3f(-1.0, 1.0, -1.0);
+	glVertex3i(0, height(), -2);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	if (isLineDistance)
@@ -108,13 +108,9 @@ void OpenGL2D::paintGL()
 		glBegin(GL_LINES);
 		glColor3f(1.0, 1.0, 1.0);
 		//init
-		GLdouble xCoord = (initX / (GLfloat)width()) * 2 - 1;
-		GLdouble yCoord = (initY / (GLfloat)width()) * 2 - 1;
-		glVertex3d(xCoord, -yCoord, -0.5f);
+		glVertex3i(initX, height() - initY, -1);
 		//end
-		xCoord = (endX / (GLfloat)width()) * 2 - 1;
-		yCoord = (endY / (GLfloat)width()) * 2 - 1;
-		glVertex3d(xCoord, -yCoord, -0.5f);
+		glVertex3i(endX, height() - endY, -1);
 		glEnd();
 
 	}
@@ -410,6 +406,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			QString message(" Distancia: ");
 			message += QString::number(distance);
 			isLineDistance = false;
+			repaint();
 			emit postMessage(message);
 		}
 		break;

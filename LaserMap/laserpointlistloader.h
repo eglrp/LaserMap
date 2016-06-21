@@ -4,8 +4,6 @@
 #include <QThread>
 #include "LaserPointList.h"
 #include "laserpoint.h"
-#include <fstream>  // std::ifstream
-#include <iostream>
 #include <liblas/liblas.hpp>
 
 class LaserPointListLoader : public QThread

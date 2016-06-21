@@ -4,10 +4,10 @@
 #include <QtWidgets/qopenglwidget.h>
 #include <QtOpenGL>
 #include <QList>
-#include <math.h>
 #include "laserpoint.h"
 #include "OpenGL3D.h"
 #include "LaserPointList.h"
+
 #define DRAG_MODE 0
 #define ZOOM_MODE 1
 #define DISTANCE_MODE 2

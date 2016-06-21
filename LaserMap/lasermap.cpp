@@ -80,9 +80,15 @@ void LaserMap::closeFile()
 		delete map2D;
 		map2D = NULL;
 		if (map3D != NULL)
+		{
 			delete map3D;
+			map3D = NULL;
+		}
 		if (window3D != NULL)
+		{
 			delete window3D;
+			window3D = NULL;
+		}
 
 		colorActions->checkedAction()->setChecked(false);
 		toolActions->checkedAction()->setChecked(false);

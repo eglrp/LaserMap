@@ -4,8 +4,8 @@ LaserMap::LaserMap(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
 	//File loader connections
-	
  	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
 	connect(ui.actionClose, SIGNAL(triggered()), this, SLOT(closeFile()));
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -14,6 +14,7 @@ LaserMap::LaserMap(QWidget *parent)
 	connect(&fiel3DLoader, SIGNAL(loaded3DList()), this, SLOT(createOpenGL3D()));
 	connect(&fiel3DLoader, SIGNAL(loading3DList(QString, int)), this, SLOT(writeMessageBar(QString, int)));
 
+	//button groups
 	toolActions = new QActionGroup(this);
 	toolActions->addAction(ui.action3D);
 	toolActions->addAction(ui.actionDistance);
@@ -28,6 +29,7 @@ LaserMap::LaserMap(QWidget *parent)
 	colorActions->addAction(ui.actionIntensityColor);
 	colorActions->setExclusive(true);
 
+	//info labels
 	localizationLabel = new QLabel();
 	localizationLabel->setAlignment(Qt::AlignLeft);
 	localizationLabel->setText("X = ..  Y = ..  Zoom = ..");
@@ -38,9 +40,6 @@ LaserMap::LaserMap(QWidget *parent)
 	statusLabel->setText("Listo");
 	statusLabel->setMinimumWidth(220);
 	ui.statusBar->addWidget(statusLabel);
-
-//  	laserPointListLoader.setFilename("C:/Users/Italo/Mis archivos/Universidad/1.-TfG/73.las");
-//  	laserPointListLoader.start();
 }
 
 LaserMap::~LaserMap()
@@ -186,9 +185,3 @@ void LaserMap::writeLocalization(int x, int y)
 	message += "%";
 	localizationLabel->setText(message);
 }
-
-/////////////////////////////////////////////////////
-//////////////////PRIVATE FUNCTIONS//////////////////
-/////////////////////////////////////////////////////
-
-

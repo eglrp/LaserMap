@@ -533,6 +533,5 @@ GLdouble OpenGL2D::calculateDistance(LaserPoint init, LaserPoint end)
 			break;
 		}
 	}
-	qDebug() << "initZ: " << initZ << "; endZ: " << endZ;
 	return sqrt(pow((init.getX() - end.getX()), 2.0) + pow((init.getY() - end.getY()), 2.0) + pow(initZ - endZ, 2.0));
 }

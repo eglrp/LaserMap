@@ -23,7 +23,6 @@ OpenGL3D::OpenGL3D(QWidget *parent)
 
 OpenGL3D::~OpenGL3D()
 {
-	//se llama al cerrar la ventana lasermap y cuando se crea un nuevo 3Dmap
 }
 
 /////////////////////////////////////////////////////
@@ -37,6 +36,11 @@ void OpenGL3D::initializeGL()
 	glEnable(GL_DEPTH_TEST);
 
 	setFrustrumRange();
+	xRotation = 315;
+	yRotation = 0;
+	fovy = 90.0;
+	xTranslation = 0;
+	yTranslation = 0;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -46,8 +50,6 @@ void OpenGL3D::initializeGL()
 
 void OpenGL3D::resizeGL(int w, int h)
 {
-	//GLdouble ratioWidget = (GLdouble)w / (GLdouble)h;
-	//updateGlOrtho(ratioWidget);
 	glViewport(0, 0, w, h);
 }
 
@@ -56,7 +58,7 @@ void OpenGL3D::paintGL()
 	updateGlOrtho(width() / (GLdouble)height());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glTranslatef(0.0, 0.0, -frustumRange);
+	glTranslatef(xTranslation, -yTranslation, -frustumRange);
 	glRotatef(xRotation, 1.0, 0.0, 0.0);
 	glRotatef(yRotation, 0.0, 1.0, 0.0);
 	glColor3f(1.0, 1.0, 1.0);
@@ -182,7 +184,7 @@ void OpenGL3D::setFrustrumRange()
 
 void OpenGL3D::mousePressEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		initX = event->x();
 		initY = event->y();
@@ -191,19 +193,27 @@ void OpenGL3D::mousePressEvent(QMouseEvent *event)
 
 void OpenGL3D::mouseMoveEvent(QMouseEvent *event)
 {
-	yRotation += ((event->x() - initX) * 360) / (GLdouble)width();
-	xRotation += ((event->y() - initY) * 360) / (GLdouble)height();
-	initX = event->x();
-	initY = event->y();
+	if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
+	{
+		xTranslation += (event->x() - initX) / (GLdouble)width() * laserPointList->xLength;
+		yTranslation += (event->y() - initY) / (GLdouble)height() * laserPointList->yLength;
+		initX = event->x();
+		initY = event->y();
 
-	if (((int)xRotation % 360) == 0) xRotation = 0;
-	if (((int)yRotation % 360) == 0) yRotation = 0;
-	repaint();
-}
+		repaint();
+	}
+	else if ((event->buttons() & Qt::RightButton) == Qt::RightButton)
+	{
+		yRotation += ((event->x() - initX) * 360) / (GLdouble)width();
+		xRotation += ((event->y() - initY) * 360) / (GLdouble)height();
+		initX = event->x();
+		initY = event->y();
 
-void OpenGL3D::mouseReleaseEvent(QMouseEvent *event)
-{
+		if (((int)xRotation % 360) == 0) xRotation = 0;
+		if (((int)yRotation % 360) == 0) yRotation = 0;
 
+		repaint();
+	}
 }
 
 void OpenGL3D::wheelEvent(QWheelEvent *event)
@@ -213,7 +223,6 @@ void OpenGL3D::wheelEvent(QWheelEvent *event)
 	if (fovy > 180) fovy = 180;
 	repaint();
 }
-
 
 /////////////////////////////////////////////////////
 ////////////////////////SLOTS////////////////////////

@@ -62,7 +62,7 @@ void Field3DLoader::run()
 				laserPointList3D->zMin = p.getZ();
 		}
 
-		//percent for loadBar
+		//percent of loadBar
 		int newPercent = (i / (float)numPoints) * 100;
 		if (newPercent > (percent + 2))
 		{

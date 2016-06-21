@@ -29,9 +29,9 @@ public slots:
 	void setRealColor();
 
 private:
-	GLdouble xRotation = 315;
-	GLdouble yRotation = 0;
-	GLdouble fovy = 90.0;
+	GLdouble xRotation, yRotation;
+	GLdouble fovy;
+	GLdouble xTranslation, yTranslation;
 	GLdouble frustumRange;
 	LaserPointList *laserPointList;
 	int colorMode;
@@ -45,7 +45,6 @@ private:
 	void updateGlOrtho(GLdouble ratioWidget);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
 };
 

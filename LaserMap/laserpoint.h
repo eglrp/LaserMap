@@ -26,7 +26,6 @@ public:
 	GLdouble getR();
 	GLdouble getG();
 	GLdouble getB();
-	int compareTo(LaserPoint point);
 
 private:
 	GLdouble x;

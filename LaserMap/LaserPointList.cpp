@@ -20,7 +20,6 @@ LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn
 
 LaserPointList::LaserPointList()
 {
-
 }
 
 LaserPointList::LaserPointList(GLdouble xMinIn, GLdouble xMaxIn, GLdouble yMinIn, GLdouble yMaxIn)

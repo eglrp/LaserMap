@@ -5,7 +5,6 @@
 #include "ui_lasermap.h"
 #include "qfiledialog.h"
 #include <QList>
-#include <liblas/liblas.hpp>
 
 #include "OpenGL2D.h"
 #include "LaserPointList.h"

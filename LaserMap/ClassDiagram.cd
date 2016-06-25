@@ -1,2 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LaserMap" Collapsed="true">
+    <Position X="7.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>4EAAAAAQACAIGAAEEAAAACEBAAAAAAAhAAAhEACAAAA=</HashCode>
+      <FileName>lasermap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LaserPoint" Collapsed="true">
+    <Position X="3.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAABAQAAAQAAAAAAAAACAAIAQBhAWABgQg=</HashCode>
+      <FileName>laserpoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LaserPointList" Collapsed="true">
+    <Position X="3.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QCAAAIAIYAAAoAACAAIAABsgAAggUAAMAIAIAoACBIA=</HashCode>
+      <FileName>LaserPointList.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Field3DLoader" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAgCCAAAIAAAAAAAAAAAAAAAAAAIAAAAAgEAAAAA=</HashCode>
+      <FileName>field3dloader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL2D" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gDIBCIABRCBQAgOCASIAwEBAICAQABAAIABAAAEIAgA=</HashCode>
+      <FileName>OpenGL2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenGL3D" Collapsed="true">
+    <Position X="7.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBIAYIABBIhgAAACACIAAEBAAAAQCAAAAEAAAAAoAgA=</HashCode>
+      <FileName>OpenGL3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LaserPointListLoader" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAghAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>laserpointlistloader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

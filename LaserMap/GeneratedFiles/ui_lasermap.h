@@ -157,20 +157,20 @@ public:
     void retranslateUi(QMainWindow *LaserMapClass)
     {
         LaserMapClass->setWindowTitle(QApplication::translate("LaserMapClass", "LaserMap", 0));
-        actionOpen->setText(QApplication::translate("LaserMapClass", "Open", 0));
+        actionOpen->setText(QApplication::translate("LaserMapClass", "Abrir LAS", 0));
 #ifndef QT_NO_TOOLTIP
         actionOpen->setToolTip(QApplication::translate("LaserMapClass", "Open", 0));
 #endif // QT_NO_TOOLTIP
-        actionClose->setText(QApplication::translate("LaserMapClass", "Close", 0));
-        actionExit->setText(QApplication::translate("LaserMapClass", "Exit", 0));
+        actionClose->setText(QApplication::translate("LaserMapClass", "Cerrar LAS", 0));
+        actionExit->setText(QApplication::translate("LaserMapClass", "Cerrar", 0));
         actionZoom->setText(QApplication::translate("LaserMapClass", "Zoom", 0));
-        actionDrag->setText(QApplication::translate("LaserMapClass", "Drag", 0));
-        actionHeightColor->setText(QApplication::translate("LaserMapClass", "HeightColor", 0));
-        actionClassColor->setText(QApplication::translate("LaserMapClass", "ClassColor", 0));
-        action3D->setText(QApplication::translate("LaserMapClass", "3D", 0));
-        actionRealColor->setText(QApplication::translate("LaserMapClass", "RealColor", 0));
-        actionDistance->setText(QApplication::translate("LaserMapClass", "Distance", 0));
-        actionIntensityColor->setText(QApplication::translate("LaserMapClass", "IntensityColor", 0));
+        actionDrag->setText(QApplication::translate("LaserMapClass", "Arrastrar", 0));
+        actionHeightColor->setText(QApplication::translate("LaserMapClass", "Altura - Color", 0));
+        actionClassColor->setText(QApplication::translate("LaserMapClass", "Clasificaci\303\263n - Color", 0));
+        action3D->setText(QApplication::translate("LaserMapClass", "Seleccionar area 3D", 0));
+        actionRealColor->setText(QApplication::translate("LaserMapClass", "Real - Color", 0));
+        actionDistance->setText(QApplication::translate("LaserMapClass", "Calcular Distancia", 0));
+        actionIntensityColor->setText(QApplication::translate("LaserMapClass", "Intensidad se\303\261al - Color", 0));
         menuFile->setTitle(QApplication::translate("LaserMapClass", "File", 0));
     } // retranslateUi
 

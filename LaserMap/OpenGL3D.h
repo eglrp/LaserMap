@@ -42,7 +42,7 @@ private:
 
 	void setColor(LaserPoint point);
 	void setFrustrumRange();
-	void updateGlOrtho(GLdouble ratioWidget);
+	void updateGluPerspective(GLdouble ratioWidget);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);

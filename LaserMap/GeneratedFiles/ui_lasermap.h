@@ -159,12 +159,15 @@ public:
         LaserMapClass->setWindowTitle(QApplication::translate("LaserMapClass", "LaserMap", 0));
         actionOpen->setText(QApplication::translate("LaserMapClass", "Abrir LAS", 0));
 #ifndef QT_NO_TOOLTIP
-        actionOpen->setToolTip(QApplication::translate("LaserMapClass", "Open", 0));
+        actionOpen->setToolTip(QApplication::translate("LaserMapClass", "Abrir LAS", 0));
 #endif // QT_NO_TOOLTIP
         actionClose->setText(QApplication::translate("LaserMapClass", "Cerrar LAS", 0));
         actionExit->setText(QApplication::translate("LaserMapClass", "Cerrar", 0));
         actionZoom->setText(QApplication::translate("LaserMapClass", "Zoom", 0));
         actionDrag->setText(QApplication::translate("LaserMapClass", "Arrastrar", 0));
+#ifndef QT_NO_TOOLTIP
+        actionDrag->setToolTip(QApplication::translate("LaserMapClass", "Arrastrar", 0));
+#endif // QT_NO_TOOLTIP
         actionHeightColor->setText(QApplication::translate("LaserMapClass", "Altura - Color", 0));
         actionClassColor->setText(QApplication::translate("LaserMapClass", "Clasificaci\303\263n - Color", 0));
         action3D->setText(QApplication::translate("LaserMapClass", "Seleccionar area 3D", 0));

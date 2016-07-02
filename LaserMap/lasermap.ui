@@ -72,7 +72,7 @@
     <string>Abrir LAS</string>
    </property>
    <property name="toolTip">
-    <string>Open</string>
+    <string>Abrir LAS</string>
    </property>
   </action>
   <action name="actionClose">
@@ -110,6 +110,9 @@
      <normaloff>:/LaserMap/drag.png</normaloff>:/LaserMap/drag.png</iconset>
    </property>
    <property name="text">
+    <string>Arrastrar</string>
+   </property>
+   <property name="toolTip">
     <string>Arrastrar</string>
    </property>
   </action>

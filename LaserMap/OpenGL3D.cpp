@@ -5,11 +5,11 @@ OpenGL3D::OpenGL3D(QWidget *parent, LaserPointList *laserPointListIn, QAction* a
 {
 	laserPointList = laserPointListIn;
 
-	if (!actionColor->text().compare("HeightColor"))
+	if (!actionColor->text().compare("Altura - Color"))
 		colorMode = HEIGHT_COLOR;
-	else if (!actionColor->text().compare("ClassColor"))
+	else if (!actionColor->text().compare("Clasificación - Color"))
 		colorMode = CLASSIFICATION_COLOR;
-	else if (!actionColor->text().compare("RealColor"))
+	else if (!actionColor->text().compare("Real - Color"))
 		colorMode = REAL_COLOR;
 	else
 		colorMode = INTENSITY_COLOR;
@@ -55,7 +55,7 @@ void OpenGL3D::resizeGL(int w, int h)
 
 void OpenGL3D::paintGL()
 {
-	updateGlOrtho(width() / (GLdouble)height());
+	updateGluPerspective(width() / (GLdouble)height());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(xTranslation, -yTranslation, -frustumRange);
@@ -74,7 +74,7 @@ void OpenGL3D::paintGL()
 	glEnd();
 }
 
-void OpenGL3D::updateGlOrtho(GLdouble ratioWidget)
+void OpenGL3D::updateGluPerspective(GLdouble ratioWidget)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

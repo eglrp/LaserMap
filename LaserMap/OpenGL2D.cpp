@@ -30,9 +30,10 @@ void OpenGL2D::initializeGL()
 	initializeOpenGLFunctions();
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_DEPTH_TEST);
-	//create and configure framebuffer
+	//create and enable framebuffer
 	glGenFramebuffers(1, &buffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, buffer);
+	//create texture2D and RenderBuffer
 	glGenTextures(1, &renderedTexture);
 	glBindTexture(GL_TEXTURE_2D, renderedTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2048, 1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
@@ -41,8 +42,10 @@ void OpenGL2D::initializeGL()
 	glGenRenderbuffers(1, &renderedDepth);
 	glBindRenderbuffer(GL_RENDERBUFFER, renderedDepth);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 2048, 1024);
+	//Associate to Framebuffer
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderedDepth);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderedTexture, 0);
+	//Disable framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	updateFramebuffer = true;
 	//reset matrix
@@ -61,6 +64,7 @@ void OpenGL2D::paintGL()
 {
 	if (updateFramebuffer)
 	{
+		//Update Framebuffer (if needed)
 		glBindFramebuffer(GL_FRAMEBUFFER, buffer);
 		glViewport(0, 0, 2048, 1024);
 
@@ -81,6 +85,7 @@ void OpenGL2D::paintGL()
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		updateFramebuffer = false;
 	}
+	//Reset 3D space
 	glViewport(0, 0, width(), height());
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -90,6 +95,7 @@ void OpenGL2D::paintGL()
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_TEXTURE_2D);
+	//Create a plane and paint the Framebuffer's texture 2D on it
 	glBindTexture(GL_TEXTURE_2D, renderedTexture);
 	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_QUADS);
@@ -103,6 +109,7 @@ void OpenGL2D::paintGL()
 	glVertex3i(0, height(), -2);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
+	//Paint LineDistance if measure mode on
 	if (isLineDistance)
 	{
 		glBegin(GL_LINES);
@@ -200,10 +207,12 @@ void OpenGL2D::setColor(LaserPoint point)
 
 void OpenGL2D::zoomGlOrtho(GLdouble *percent)
 {
+	//Apply new percent
 	laserPointList->yMin += laserPointList->yLength*(*percent) / 2;
 	laserPointList->yMax -= laserPointList->yLength*(*percent) / 2;
 	laserPointList->xMin += laserPointList->xLength*(*percent) / 2;
 	laserPointList->xMax -= laserPointList->xLength*(*percent) / 2;
+	//Update new length and new percent
 	laserPointList->yLength = laserPointList->yMax - laserPointList->yMin;
 	laserPointList->xLength = laserPointList->xMax - laserPointList->xMin;
 	laserPointList->percent *= (1 - (*percent));
@@ -217,13 +226,16 @@ void OpenGL2D::updateGlOrtho(GLdouble ratioWidget)
 	if (laserPointList->getRatioMap() > ratioWidget)
 	{
 		glOrtho(laserPointList->xMin, laserPointList->xMax,
-			laserPointList->yMin - (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap()))) / 2.0, laserPointList->yMax + (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap()))) / 2.0,
+			laserPointList->yMin - (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap()))) / 2.0,
+			laserPointList->yMax + (laserPointList->xLength * ((1 / ratioWidget) - (1 / laserPointList->getRatioMap()))) / 2.0,
 			laserPointList->zMin, laserPointList->zMax);
 
 	}
 	else
 	{
-		glOrtho(laserPointList->xMin - (laserPointList->yLength * (ratioWidget - laserPointList->getRatioMap())) / 2.0, laserPointList->xMax + (laserPointList->yLength * (ratioWidget - laserPointList->getRatioMap())) / 2.0,
+		glOrtho(
+			laserPointList->xMin - (laserPointList->yLength * (ratioWidget - laserPointList->getRatioMap())) / 2.0,
+			laserPointList->xMax + (laserPointList->yLength * (ratioWidget - laserPointList->getRatioMap())) / 2.0,
 			laserPointList->yMin, laserPointList->yMax,
 			laserPointList->zMin, laserPointList->zMax);
 	}
@@ -405,6 +417,7 @@ void OpenGL2D::mouseReleaseEvent(QMouseEvent *event)
 			GLdouble distance = calculateDistance(init, end);
 			QString message(" Distancia: ");
 			message += QString::number(distance);
+			message += "m";
 			isLineDistance = false;
 			repaint();
 			emit postMessage(message);
@@ -527,7 +540,7 @@ GLdouble OpenGL2D::calculateDistance(LaserPoint init, LaserPoint end)
 	for (int i = 0; i < listSize; i++)
 	{
 		LaserPoint p = pointList->at(i);
-		if (abs(p.getX() - end.getX()) < 10 && abs(p.getY() - end.getY()) < 10)
+		if (abs(p.getX() - end.getX()) < 5 && abs(p.getY() - end.getY()) < 5)
 		{
 			endZ = p.getZ();
 			break;
